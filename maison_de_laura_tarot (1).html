@@ -1,0 +1,3412 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+  <title>Maison de l'Aura | Tiệm Bói Thần Bí & Tarot Sanctuary</title>
+  <meta name="description" content="Nơi lắng nghe trực giác, gieo quẻ vận mệnh, trải bài Tarot AI và kết nối cùng Master Tarot Reader danh tiếng. Tối ưu cho mọi thiết bị di động.">
+  <meta name="theme-color" content="#0a0914">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+  <!-- Google Fonts with fallbacks -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* CSS RESET & MODERN VARIABLES */
+    :root {
+      --bg-dark: #0a0914;
+      --bg-card: rgba(22, 19, 39, 0.78);
+      --bg-cottage: #131126;
+      --border-gold: rgba(212, 175, 55, 0.35);
+      --border-gold-glow: rgba(243, 208, 114, 0.65);
+      --gold-primary: #e8c872;
+      --gold-deep: #c99e32;
+      --gold-sparkle: #fff4cc;
+      --rose-cottage: #e6a5b8;
+      --rose-soft: #fcedf2;
+      --lavender-mist: #b5a4d6;
+      --emerald-moss: #224337;
+      --text-main: #f5f2eb;
+      --text-muted: #b8b1a4;
+      --text-gold: #f9e29b;
+      --font-serif: 'Cormorant Garamond', 'Cinzel', Georgia, serif;
+      --font-display: 'Cinzel', Georgia, serif;
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      --shadow-magical: 0 10px 30px -5px rgba(0, 0, 0, 0.6), 0 0 25px rgba(232, 200, 114, 0.15);
+      --radius-cottage: 20px;
+      --safe-top: env(safe-area-inset-top, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      font-size: 15px;
+      line-height: 1.65;
+      overflow-x: hidden;
+      position: relative;
+      background-image: 
+        radial-gradient(circle at 15% 15%, rgba(181, 164, 214, 0.1) 0%, transparent 45%),
+        radial-gradient(circle at 85% 55%, rgba(230, 165, 184, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 50% 90%, rgba(34, 67, 55, 0.22) 0%, transparent 55%);
+      background-attachment: fixed;
+      min-height: 100vh;
+      min-height: 100dvh;
+      padding-top: calc(72px + var(--safe-top));
+      padding-bottom: var(--safe-bottom);
+    }
+
+    /* PREVENT ACCIDENTAL HORIZONTAL OVERFLOW */
+    body, html {
+      max-width: 100vw;
+    }
+
+    /* CANVAS FOR STARS & GLOW DUST */
+    #particle-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* TYPOGRAPHY */
+    h1, h2, h3, h4, .font-serif {
+      font-family: var(--font-serif);
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+    .font-display {
+      font-family: var(--font-display);
+      letter-spacing: 0.06em;
+    }
+    .text-gold { color: var(--gold-primary); }
+    .text-rose { color: var(--rose-cottage); }
+    .text-lavender { color: var(--lavender-mist); }
+    .text-gradient-gold {
+      background: linear-gradient(135deg, #fff2cf 0%, #e8c872 50%, #c99e32 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* INPUT ELEMENTS PREVENT IOS ZOOM (>=16px) */
+    input, select, textarea {
+      font-size: 16px !important;
+      font-family: var(--font-sans);
+    }
+
+    /* HEADER & NAVIGATION */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+      padding: max(12px, var(--safe-top)) 20px 12px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.3s ease;
+      background: rgba(10, 9, 20, 0.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--text-main);
+    }
+    .brand-logo svg {
+      width: 32px;
+      height: 32px;
+      flex-shrink: 0;
+      filter: drop-shadow(0 0 8px rgba(232, 200, 114, 0.5));
+    }
+    .brand-logo span.name {
+      font-family: var(--font-display);
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .brand-logo span.tagline {
+      font-size: 10px;
+      color: var(--rose-cottage);
+      display: block;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-family: var(--font-sans);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 13.5px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      transition: color 0.3s;
+      padding: 4px 0;
+    }
+    .nav-links a:hover {
+      color: var(--gold-primary);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* SOUND & WALLET BUTTONS */
+    .icon-btn {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-gold);
+      color: var(--gold-primary);
+      width: 38px;
+      height: 38px;
+      min-width: 38px;
+      min-height: 38px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.25s;
+    }
+    .icon-btn:active {
+      transform: scale(0.92);
+    }
+
+    .wallet-chip {
+      background: linear-gradient(135deg, rgba(34, 67, 55, 0.7), rgba(22, 19, 39, 0.9));
+      border: 1px solid var(--border-gold);
+      padding: 6px 12px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: all 0.25s;
+      white-space: nowrap;
+    }
+    .wallet-chip:active {
+      transform: scale(0.95);
+    }
+    .wallet-chip .coin-icon {
+      color: #ffd700;
+      font-size: 14px;
+    }
+    .wallet-chip .balance {
+      font-weight: 700;
+      font-size: 12.5px;
+      color: var(--gold-sparkle);
+    }
+    .wallet-chip .add-btn {
+      background: var(--gold-primary);
+      color: #1a1500;
+      font-size: 11px;
+      font-weight: 800;
+      border-radius: 50%;
+      width: 17px;
+      height: 17px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* MOBILE MENU TOGGLE */
+    .menu-toggle-btn {
+      display: none;
+      background: none;
+      border: 1px solid var(--border-gold);
+      color: var(--gold-primary);
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* MOBILE SLIDE DRAWER */
+    .mobile-drawer {
+      position: fixed;
+      top: 0;
+      right: -280px;
+      width: 270px;
+      height: 100%;
+      background: var(--bg-cottage);
+      border-left: 1px solid var(--border-gold);
+      z-index: 250;
+      padding: calc(24px + var(--safe-top)) 20px 20px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      box-shadow: -10px 0 30px rgba(0,0,0,0.8);
+      transition: right 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .mobile-drawer.open {
+      right: 0;
+    }
+    .mobile-drawer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+      padding-bottom: 12px;
+      margin-bottom: 8px;
+    }
+    .mobile-nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      color: var(--text-main);
+      text-decoration: none;
+      font-size: 15px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid transparent;
+      transition: all 0.2s;
+    }
+    .mobile-nav-item:active, .mobile-nav-item:hover {
+      background: rgba(232, 200, 114, 0.15);
+      border-color: var(--gold-primary);
+      color: var(--gold-sparkle);
+    }
+    .drawer-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.65);
+      z-index: 240;
+      display: none;
+      backdrop-filter: blur(4px);
+    }
+    .drawer-overlay.active {
+      display: block;
+    }
+
+    /* BUTTON STYLES (TOUCH FRIENDLY MIN 44PX) */
+    .btn-magical {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 44px;
+      padding: 10px 22px;
+      border-radius: 28px;
+      font-family: var(--font-sans);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      position: relative;
+      overflow: hidden;
+      border: none;
+      user-select: none;
+    }
+    .btn-magical:active {
+      transform: scale(0.96);
+    }
+    .btn-gold {
+      background: linear-gradient(135deg, #f7df98 0%, #e2be62 50%, #b88a24 100%);
+      color: #181303;
+      box-shadow: 0 4px 15px rgba(212, 175, 55, 0.35);
+    }
+    .btn-outline-gold {
+      background: rgba(22, 19, 39, 0.6);
+      color: var(--gold-primary);
+      border: 1px solid var(--border-gold);
+    }
+
+    /* MAIN CONTAINER & SECTIONS */
+    main {
+      position: relative;
+      z-index: 1;
+    }
+
+    section {
+      padding: 60px 18px;
+      max-width: 1220px;
+      margin: 0 auto;
+      opacity: 0;
+      transform: translateY(25px);
+      transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .section-header {
+      text-align: center;
+      max-width: 680px;
+      margin: 0 auto 36px auto;
+    }
+    .badge-sub {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 20px;
+      background: rgba(232, 200, 114, 0.08);
+      border: 1px solid rgba(232, 200, 114, 0.25);
+      color: var(--gold-primary);
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-size: clamp(26px, 5vw, 38px);
+      font-weight: 600;
+      line-height: 1.25;
+      margin-bottom: 14px;
+      color: var(--text-main);
+    }
+    .section-desc {
+      color: var(--text-muted);
+      font-size: 14.5px;
+      line-height: 1.65;
+    }
+
+    /* ----------------------------------------------------
+       HERO & STACKED DECK (RESPONSIVE TOUCH & HOVER)
+       ---------------------------------------------------- */
+    .hero-section {
+      min-height: calc(90vh - 72px);
+      min-height: calc(90dvh - 72px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding-top: 20px;
+      padding-bottom: 40px;
+    }
+    .hero-title {
+      font-size: clamp(30px, 6vw, 56px);
+      font-family: var(--font-serif);
+      font-weight: 600;
+      line-height: 1.2;
+      margin-bottom: 16px;
+      max-width: 860px;
+    }
+    .hero-subtitle {
+      font-size: clamp(14px, 3.5vw, 16.5px);
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto 30px auto;
+      font-weight: 300;
+      padding: 0 10px;
+    }
+
+    .deck-container-wrap {
+      width: 100%;
+      max-width: 980px;
+      margin: 10px auto 20px auto;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .deck-instruction {
+      font-size: 12px;
+      color: var(--rose-cottage);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* DECK FAN CONTAINER */
+    .tarot-deck-fan {
+      position: relative;
+      height: 340px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      perspective: 1200px;
+    }
+
+    .stacked-card {
+      position: absolute;
+      width: 175px;
+      height: 275px;
+      background: linear-gradient(145deg, #1c1732 0%, #100d1e 100%);
+      border: 1.5px solid var(--border-gold);
+      border-radius: 14px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 14px;
+      transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.3s, border-color 0.3s;
+      transform-origin: bottom center;
+      user-select: none;
+      -webkit-user-select: none;
+      overflow: hidden;
+    }
+    .stacked-card::before {
+      content: '';
+      position: absolute;
+      inset: 5px;
+      border: 1px dashed rgba(212, 175, 55, 0.3);
+      border-radius: 10px;
+      pointer-events: none;
+    }
+
+    /* Stacked natural positions desktop */
+    .stacked-card[data-index="0"] { transform: translateX(-160px) rotate(-16deg) translateY(20px); z-index: 1; }
+    .stacked-card[data-index="1"] { transform: translateX(-80px) rotate(-8deg) translateY(6px); z-index: 2; }
+    .stacked-card[data-index="2"] { transform: translateX(0px) rotate(0deg) translateY(0px); z-index: 3; }
+    .stacked-card[data-index="3"] { transform: translateX(80px) rotate(8deg) translateY(6px); z-index: 2; }
+    .stacked-card[data-index="4"] { transform: translateX(160px) rotate(16deg) translateY(20px); z-index: 1; }
+
+    /* Desktop Hover Fan */
+    @media (hover: hover) and (pointer: fine) {
+      .tarot-deck-fan:hover .stacked-card[data-index="0"] { transform: translateX(-240px) rotate(-20deg) translateY(30px); }
+      .tarot-deck-fan:hover .stacked-card[data-index="1"] { transform: translateX(-120px) rotate(-10deg) translateY(12px); }
+      .tarot-deck-fan:hover .stacked-card[data-index="2"] { transform: translateX(0px) rotate(0deg) translateY(0px); }
+      .tarot-deck-fan:hover .stacked-card[data-index="3"] { transform: translateX(120px) rotate(10deg) translateY(12px); }
+      .tarot-deck-fan:hover .stacked-card[data-index="4"] { transform: translateX(240px) rotate(20deg) translateY(30px); }
+
+      .stacked-card:hover {
+        transform: translateY(-45px) rotate(0deg) scale(1.15) !important;
+        z-index: 10 !important;
+        border-color: var(--gold-sparkle);
+        box-shadow: 0 20px 45px rgba(0, 0, 0, 0.9), 0 0 25px rgba(232, 200, 114, 0.45);
+      }
+    }
+
+    /* MOBILE / TOUCH SCREEN SPECIAL HANDLING (320px - 768px) */
+    @media (max-width: 768px) {
+      .tarot-deck-fan {
+        height: 290px;
+        perspective: 800px;
+      }
+      .stacked-card {
+        width: 140px;
+        height: 220px;
+        padding: 10px;
+      }
+      .stacked-card[data-index="0"] { transform: translateX(-105px) rotate(-14deg) translateY(12px); }
+      .stacked-card[data-index="1"] { transform: translateX(-52px) rotate(-7deg) translateY(4px); }
+      .stacked-card[data-index="2"] { transform: translateX(0px) rotate(0deg) translateY(0px); }
+      .stacked-card[data-index="3"] { transform: translateX(52px) rotate(7deg) translateY(4px); }
+      .stacked-card[data-index="4"] { transform: translateX(105px) rotate(14deg) translateY(12px); }
+
+      /* When tapped on mobile, highlight card */
+      .stacked-card.touch-active {
+        transform: translateY(-35px) scale(1.18) !important;
+        z-index: 15 !important;
+        border-color: var(--gold-sparkle) !important;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.9), 0 0 25px rgba(232,200,114,0.6) !important;
+      }
+      .card-title {
+        font-size: 15px !important;
+      }
+      .card-price-tag {
+        font-size: 10px !important;
+      }
+      .nav-links {
+        display: none;
+      }
+      .menu-toggle-btn {
+        display: flex;
+      }
+    }
+
+    .card-roman {
+      font-family: var(--font-display);
+      font-size: 11px;
+      color: var(--gold-primary);
+      text-align: center;
+      letter-spacing: 0.08em;
+    }
+    .card-art-box {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .card-art-box svg {
+      width: 55px;
+      height: 55px;
+      color: var(--gold-primary);
+      filter: drop-shadow(0 0 8px rgba(232, 200, 114, 0.4));
+    }
+    .card-info-bottom {
+      text-align: center;
+      padding-top: 6px;
+    }
+    .card-title {
+      font-family: var(--font-serif);
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 2px;
+    }
+    .card-price-tag {
+      font-size: 10.5px;
+      color: var(--rose-cottage);
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+
+    /* ----------------------------------------------------
+       FEATURE 0: GUIDED ONBOARDING (RESPONSIVE)
+       ---------------------------------------------------- */
+    .guide-card-wrap {
+      background: linear-gradient(135deg, rgba(26, 21, 46, 0.85), rgba(16, 14, 28, 0.95));
+      border: 1px solid var(--border-gold);
+      border-radius: var(--radius-cottage);
+      padding: clamp(20px, 4vw, 40px);
+      box-shadow: var(--shadow-magical);
+    }
+    .guide-progress-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 26px;
+    }
+    .progress-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      transition: all 0.3s;
+    }
+    .progress-dot.active {
+      background: var(--gold-primary);
+      box-shadow: 0 0 10px var(--gold-primary);
+      transform: scale(1.3);
+    }
+    .progress-dot.done {
+      background: var(--rose-cottage);
+    }
+    .guide-step {
+      display: none;
+      animation: fadeIn 0.4s ease forwards;
+    }
+    .guide-step.active {
+      display: block;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .guide-question {
+      font-size: clamp(20px, 4vw, 25px);
+      text-align: center;
+      margin-bottom: 22px;
+      color: var(--text-gold);
+      font-family: var(--font-serif);
+      line-height: 1.35;
+    }
+    .guide-options-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+    .guide-opt-btn {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(212, 175, 55, 0.2);
+      border-radius: 14px;
+      padding: 16px;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      color: var(--text-main);
+      user-select: none;
+    }
+    .guide-opt-btn:active, .guide-opt-btn.selected {
+      background: rgba(232, 200, 114, 0.16);
+      border-color: var(--gold-primary);
+    }
+    .guide-opt-btn .opt-icon {
+      font-size: 22px;
+    }
+    .guide-opt-btn .opt-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--gold-primary);
+      font-family: var(--font-serif);
+    }
+    .guide-opt-btn .opt-desc {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    .aura-result-box {
+      text-align: center;
+      padding: 10px;
+    }
+    .aura-orb-glow {
+      width: 90px;
+      height: 90px;
+      margin: 0 auto 16px auto;
+      border-radius: 50%;
+      background: radial-gradient(circle, #f9c2d1 0%, #b5a4d6 50%, #e8c872 100%);
+      box-shadow: 0 0 35px rgba(230, 165, 184, 0.7);
+      animation: pulse-aura 3s infinite alternate;
+    }
+    @keyframes pulse-aura {
+      0% { transform: scale(0.95); filter: blur(2px); }
+      100% { transform: scale(1.08); filter: blur(0px) drop-shadow(0 0 20px #e8c872); }
+    }
+
+    /* ----------------------------------------------------
+       FEATURE 1: AI TAROT ORACLE (5.000đ)
+       ---------------------------------------------------- */
+    .reading-control-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border-gold);
+      border-radius: var(--radius-cottage);
+      padding: clamp(20px, 4vw, 32px);
+      box-shadow: var(--shadow-magical);
+    }
+    .category-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    .pill-btn {
+      padding: 8px 16px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(212, 175, 55, 0.2);
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    .pill-btn.active, .pill-btn:active {
+      background: rgba(232, 200, 114, 0.2);
+      border-color: var(--gold-primary);
+      color: var(--gold-sparkle);
+    }
+
+    .situation-textarea {
+      width: 100%;
+      height: 105px;
+      background: rgba(10, 9, 20, 0.7);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      border-radius: 12px;
+      color: var(--text-main);
+      padding: 14px;
+      resize: vertical;
+    }
+    .situation-textarea:focus {
+      outline: none;
+      border-color: var(--gold-primary);
+      box-shadow: 0 0 12px rgba(232, 200, 114, 0.25);
+    }
+
+    .spread-select-wrap {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 18px;
+      padding: 14px;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 12px;
+      border: 1px dashed rgba(212, 175, 55, 0.25);
+    }
+
+    /* CARD DRAW STAGE (MOBILE FLEX WRAP & SCROLL) */
+    .card-draw-stage {
+      margin-top: 26px;
+      text-align: center;
+      display: none;
+    }
+    .deck-scroll-wrapper {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin: 22px 0;
+      flex-wrap: wrap;
+    }
+    .drawn-slot {
+      width: 160px;
+      height: 250px;
+      border-radius: 12px;
+      perspective: 1000px;
+      position: relative;
+    }
+    @media (max-width: 480px) {
+      .drawn-slot {
+        width: 100%;
+        max-width: 180px;
+        height: 260px;
+      }
+    }
+    .drawn-slot-label {
+      font-size: 11px;
+      color: var(--rose-cottage);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+    .tarot-card-flip {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      cursor: pointer;
+    }
+    .tarot-card-flip.flipped {
+      transform: rotateY(180deg);
+    }
+    .card-face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      border-radius: 12px;
+      border: 1.5px solid var(--border-gold);
+      box-shadow: var(--shadow-magical);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 12px;
+    }
+    .card-face.back {
+      background: linear-gradient(135deg, #18142a 0%, #0d0a17 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .card-face.back::after {
+      content: '';
+      position: absolute;
+      inset: 5px;
+      border: 1px dashed rgba(212, 175, 55, 0.35);
+      border-radius: 8px;
+    }
+    .card-face.front {
+      background: linear-gradient(145deg, #1e1a34 0%, #120e22 100%);
+      transform: rotateY(180deg);
+      border-color: var(--gold-primary);
+    }
+    .card-face.front .card-arcana-num {
+      font-family: var(--font-display);
+      font-size: 10.5px;
+      color: var(--gold-primary);
+      text-align: center;
+    }
+    .card-face.front .card-symbol-svg {
+      width: 55px;
+      height: 55px;
+      margin: auto;
+      color: var(--gold-primary);
+      filter: drop-shadow(0 0 8px rgba(232, 200, 114, 0.4));
+    }
+    .card-face.front .card-name-vi {
+      font-family: var(--font-serif);
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-main);
+      text-align: center;
+    }
+    .card-face.front .card-name-en {
+      font-size: 10px;
+      color: var(--rose-cottage);
+      text-align: center;
+      text-transform: uppercase;
+    }
+    .card-face.front .card-keywords {
+      font-size: 9.5px;
+      color: var(--text-muted);
+      text-align: center;
+      margin-top: 3px;
+      background: rgba(255, 255, 255, 0.04);
+      padding: 2px 5px;
+      border-radius: 5px;
+    }
+
+    /* READING RESULT DISPLAY */
+    .ai-reading-result {
+      display: none;
+      margin-top: 30px;
+      background: rgba(18, 15, 33, 0.88);
+      border: 1px solid var(--border-gold);
+      border-radius: var(--radius-cottage);
+      padding: clamp(20px, 4vw, 32px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+      text-align: left;
+    }
+    .reading-block {
+      margin-bottom: 18px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+    }
+    .reading-block:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+    .reading-block h4 {
+      font-size: 16px;
+      color: var(--rose-cottage);
+      margin-bottom: 6px;
+    }
+    .reading-block p {
+      color: var(--text-main);
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+    /* ----------------------------------------------------
+       FEATURE 2: MASTER TAROT READERS (RESPONSIVE GRID)
+       ---------------------------------------------------- */
+    .readers-filter-bar {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+    }
+    .readers-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 22px;
+    }
+    .reader-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-gold);
+      border-radius: var(--radius-cottage);
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+    .reader-banner {
+      height: 95px;
+      position: relative;
+    }
+    .reader-avatar-wrap {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      border: 2px solid var(--gold-primary);
+      position: absolute;
+      bottom: -36px;
+      left: 20px;
+      overflow: hidden;
+      background: #1e1a34;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    }
+    .reader-avatar-wrap svg {
+      width: 100%;
+      height: 100%;
+    }
+    .reader-badge-top {
+      position: absolute;
+      top: 12px;
+      right: 14px;
+      background: rgba(10, 9, 20, 0.75);
+      backdrop-filter: blur(6px);
+      border: 1px solid var(--border-gold);
+      color: var(--gold-primary);
+      font-size: 10.5px;
+      padding: 3px 8px;
+      border-radius: 10px;
+      font-weight: 600;
+    }
+    .reader-body {
+      padding: 44px 20px 20px 20px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .reader-name {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 3px;
+    }
+    .reader-title-specialty {
+      font-size: 12.5px;
+      color: var(--rose-cottage);
+      margin-bottom: 10px;
+      font-weight: 500;
+    }
+    .reader-stats {
+      display: flex;
+      gap: 14px;
+      margin-bottom: 14px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .reader-bio {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      line-height: 1.55;
+      flex: 1;
+    }
+    .reader-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 18px;
+    }
+    .reader-tag {
+      font-size: 10.5px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 3px 8px;
+      border-radius: 10px;
+      color: var(--lavender-mist);
+    }
+    .reader-pricing-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid rgba(212, 175, 55, 0.15);
+      padding-top: 14px;
+    }
+    .reader-price-value {
+      font-family: var(--font-serif);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--gold-primary);
+    }
+    .reader-price-unit {
+      font-size: 10.5px;
+      color: var(--text-muted);
+    }
+
+    /* ----------------------------------------------------
+       FEATURE 3: MINI FUN FORTUNES
+       ---------------------------------------------------- */
+    .mini-tabs-nav {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 26px;
+      flex-wrap: wrap;
+    }
+    .mini-tab-btn {
+      padding: 9px 18px;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-gold);
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .mini-tab-btn.active, .mini-tab-btn:active {
+      background: rgba(232, 200, 114, 0.2);
+      border-color: var(--gold-primary);
+      color: var(--gold-sparkle);
+    }
+
+    .mini-game-stage {
+      background: var(--bg-card);
+      border: 1px solid var(--border-gold);
+      border-radius: var(--radius-cottage);
+      padding: clamp(26px, 4vw, 40px) 20px;
+      box-shadow: var(--shadow-magical);
+      text-align: center;
+      min-height: 380px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cylinder-box {
+      width: 100px;
+      height: 165px;
+      background: linear-gradient(135deg, #44321d 0%, #291d0e 100%);
+      border: 2px solid var(--gold-primary);
+      border-radius: 12px 12px 22px 22px;
+      position: relative;
+      margin: 0 auto 24px auto;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+      cursor: pointer;
+      transform-origin: bottom center;
+    }
+    .cylinder-box.shaking {
+      animation: shake-cylinder 0.5s infinite ease-in-out;
+    }
+    @keyframes shake-cylinder {
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(-10deg) translateY(-6px); }
+      50% { transform: rotate(8deg) translateY(-3px); }
+      75% { transform: rotate(-7deg) translateY(-5px); }
+    }
+    .bamboo-stick {
+      position: absolute;
+      top: -25px;
+      left: 50%;
+      width: 14px;
+      height: 90px;
+      background: #d4a373;
+      border: 1px solid #7f5539;
+      border-radius: 3px;
+      transform: translateX(-50%);
+      transition: transform 0.4s ease-out;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 8.5px;
+      font-weight: 700;
+      color: #3e2723;
+    }
+    .cylinder-box.opened .bamboo-stick {
+      transform: translateX(-50%) translateY(-55px);
+      box-shadow: 0 0 12px #ffd700;
+    }
+
+    .cookie-interactive {
+      width: 125px;
+      height: 105px;
+      margin: 0 auto 20px auto;
+      cursor: pointer;
+    }
+    .cookie-svg {
+      width: 100%;
+      height: 100%;
+      filter: drop-shadow(0 6px 16px rgba(212, 175, 55, 0.3));
+    }
+
+    .mini-result-parchment {
+      display: none;
+      background: #fdfbf7;
+      color: #2b2317;
+      border-radius: 12px;
+      padding: 20px;
+      max-width: 520px;
+      width: 100%;
+      margin: 18px auto 0 auto;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+      border: 1px solid #d4af37;
+      text-align: center;
+    }
+    .mini-poem {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 15px;
+      line-height: 1.6;
+      color: #4a3e2c;
+      margin-bottom: 10px;
+      border-top: 1px dashed #d4af37;
+      border-bottom: 1px dashed #d4af37;
+      padding: 8px 0;
+    }
+
+    .zodiac-form-wrap {
+      max-width: 480px;
+      width: 100%;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      text-align: left;
+    }
+    @media (max-width: 520px) {
+      .zodiac-form-wrap {
+        grid-template-columns: 1fr;
+      }
+    }
+    .zodiac-select {
+      width: 100%;
+      padding: 10px;
+      background: rgba(10, 9, 20, 0.85);
+      border: 1px solid var(--border-gold);
+      border-radius: 10px;
+      color: var(--text-main);
+    }
+
+    /* ----------------------------------------------------
+       RESPONSIVE MODALS (BOTTOM-SHEET READY ON MOBILE)
+       ---------------------------------------------------- */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(4, 3, 10, 0.85);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      z-index: 300;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+    .modal-backdrop.active {
+      display: flex;
+      opacity: 1;
+    }
+    .modal-window {
+      background: var(--bg-cottage);
+      border: 1.5px solid var(--border-gold);
+      border-radius: var(--radius-cottage);
+      width: 100%;
+      max-width: 540px;
+      max-height: 88vh;
+      max-height: 88dvh;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.95);
+      position: relative;
+      padding: clamp(20px, 4vw, 32px);
+      transform: scale(0.94);
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .modal-backdrop.active .modal-window {
+      transform: scale(1);
+    }
+    .modal-close-btn {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: rgba(255, 255, 255, 0.08);
+      border: none;
+      color: var(--text-muted);
+      font-size: 18px;
+      cursor: pointer;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+    }
+    .modal-title {
+      font-size: clamp(20px, 4vw, 24px);
+      color: var(--gold-primary);
+      margin-bottom: 4px;
+      font-family: var(--font-serif);
+    }
+    .modal-sub {
+      color: var(--text-muted);
+      font-size: 13px;
+      margin-bottom: 20px;
+    }
+
+    .booking-slot-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(85px, 1fr));
+      gap: 8px;
+      margin: 12px 0 20px 0;
+    }
+    .slot-pill {
+      padding: 9px 4px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(212, 175, 55, 0.2);
+      border-radius: 8px;
+      text-align: center;
+      font-size: 12.5px;
+      color: var(--text-main);
+      cursor: pointer;
+    }
+    .slot-pill.selected {
+      background: rgba(232, 200, 114, 0.25);
+      border-color: var(--gold-primary);
+      color: var(--gold-sparkle);
+      font-weight: 600;
+    }
+
+    .qr-payment-card {
+      background: #ffffff;
+      color: #1a1a1a;
+      border-radius: 14px;
+      padding: 16px;
+      text-align: center;
+      margin: 16px 0;
+    }
+    .qr-image-mock {
+      width: 150px;
+      height: 150px;
+      margin: 8px auto;
+      background: #f0f0f0;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ----------------------------------------------------
+       CUSTOMER SUPPORT (MOBILE POPUP FIT)
+       ---------------------------------------------------- */
+    .support-floating-bubble {
+      position: fixed;
+      bottom: max(20px, var(--safe-bottom));
+      right: 20px;
+      z-index: 150;
+    }
+    .support-trigger-btn {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #e8c872 0%, #e6a5b8 100%);
+      border: 2px solid #ffffff;
+      color: #1a1500;
+      box-shadow: 0 6px 20px rgba(232, 200, 114, 0.5);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .support-chat-box {
+      position: absolute;
+      bottom: 66px;
+      right: 0;
+      width: min(340px, calc(100vw - 36px));
+      max-height: 440px;
+      background: var(--bg-cottage);
+      border: 1px solid var(--border-gold);
+      border-radius: 18px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.85);
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .support-chat-box.open {
+      display: flex;
+    }
+    .chat-header {
+      padding: 12px 16px;
+      background: rgba(34, 67, 55, 0.5);
+      border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .chat-body {
+      flex: 1;
+      padding: 14px;
+      overflow-y: auto;
+      max-height: 250px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .chat-msg {
+      max-width: 85%;
+      padding: 9px 13px;
+      border-radius: 12px;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .chat-msg.bot {
+      background: rgba(255, 255, 255, 0.08);
+      align-self: flex-start;
+      border: 1px solid rgba(212, 175, 55, 0.15);
+      color: var(--text-main);
+    }
+    .chat-msg.user {
+      background: linear-gradient(135deg, #e8c872, #c99e32);
+      color: #141000;
+      align-self: flex-end;
+      font-weight: 500;
+    }
+    .chat-quick-chips {
+      padding: 8px 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .chat-chip {
+      font-size: 11px;
+      padding: 4px 9px;
+      background: rgba(232, 200, 114, 0.1);
+      border: 1px solid rgba(232, 200, 114, 0.25);
+      border-radius: 12px;
+      color: var(--gold-primary);
+      cursor: pointer;
+    }
+    .chat-input-bar {
+      padding: 10px 12px;
+      display: flex;
+      gap: 6px;
+      background: rgba(10, 9, 20, 0.6);
+      border-top: 1px solid rgba(212, 175, 55, 0.2);
+    }
+    .chat-input-bar input {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 14px;
+      padding: 7px 12px;
+      color: #fff;
+    }
+    .chat-input-bar button {
+      background: var(--gold-primary);
+      border: none;
+      border-radius: 50%;
+      width: 34px;
+      height: 34px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #110e01;
+    }
+
+    /* FOOTER */
+    footer {
+      background: #07060d;
+      border-top: 1px solid rgba(212, 175, 55, 0.15);
+      padding: 50px 18px max(24px, var(--safe-bottom)) 18px;
+      margin-top: 60px;
+    }
+    .footer-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+    @media (max-width: 800px) {
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    @media (max-width: 480px) {
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .footer-col h5 {
+      font-family: var(--font-serif);
+      font-size: 16px;
+      color: var(--gold-primary);
+      margin-bottom: 14px;
+    }
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .footer-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 13px;
+    }
+
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 0 auto;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      padding-top: 20px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* TOAST */
+    .toast-container {
+      position: fixed;
+      top: max(80px, calc(var(--safe-top) + 60px));
+      right: 18px;
+      left: 18px;
+      max-width: 380px;
+      margin: 0 auto;
+      z-index: 350;
+      pointer-events: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .toast-msg {
+      background: rgba(22, 19, 39, 0.96);
+      border: 1px solid var(--gold-primary);
+      color: var(--text-main);
+      padding: 11px 16px;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.85);
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      animation: slideInDown 0.3s ease;
+    }
+    @keyframes slideInDown {
+      from { transform: translateY(-20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="particle-canvas"></canvas>
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- MOBILE SLIDE DRAWER -->
+  <div class="drawer-overlay" id="drawerOverlay" onclick="toggleMobileMenu()"></div>
+  <div class="mobile-drawer" id="mobileDrawer">
+    <div class="mobile-drawer-header">
+      <span class="font-display text-gold" style="font-size: 16px;">Maison de l'Aura</span>
+      <button class="modal-close-btn" style="position:static;" onclick="toggleMobileMenu()">✕</button>
+    </div>
+    <a href="#guide-section" class="mobile-nav-item" onclick="toggleMobileMenu()">🔮 Khởi Duyên Trực Giác</a>
+    <a href="#ai-tarot" class="mobile-nav-item" onclick="toggleMobileMenu()">⚡ Tarot AI Oracle (5k)</a>
+    <a href="#readers" class="mobile-nav-item" onclick="toggleMobileMenu()">👑 Master Readers Danh Tiếng</a>
+    <a href="#mini-fun" class="mobile-nav-item" onclick="toggleMobileMenu()">🎋 Gieo Quẻ Vui (2k)</a>
+    <a href="javascript:void(0)" class="mobile-nav-item" onclick="toggleMobileMenu(); openWalletModal()">🪙 Ví Xu Tinh Tú</a>
+    <a href="javascript:void(0)" class="mobile-nav-item" onclick="toggleMobileMenu(); openHistoryModal()">📜 Nhật Ký Quẻ</a>
+    <a href="javascript:void(0)" class="mobile-nav-item" onclick="toggleMobileMenu(); openContactModal()">🌿 Liên Hệ Tiệm Trà</a>
+    <a href="javascript:void(0)" class="mobile-nav-item" onclick="toggleMobileMenu(); openDisclaimerModal()">⚖️ Miễn Trừ Trách Nhiệm</a>
+  </div>
+
+  <!-- NAVIGATION HEADER -->
+  <header id="mainHeader">
+    <a href="#hero" class="brand-logo" onclick="playSound('chime')">
+      <!-- Sacred Botanical Moon SVG -->
+      <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20 2C10.06 2 2 10.06 2 20C2 29.94 10.06 38 20 38C22.25 38 24.39 37.58 26.35 36.81C19.78 34.23 15.11 27.67 15.11 20C15.11 12.33 19.78 5.77 26.35 3.19C24.39 2.42 22.25 2 20 2Z" fill="url(#moonGrad)"/>
+        <circle cx="28" cy="14" r="2" fill="#FFE29A"/>
+        <path d="M28 8L29 11L32 12L29 13L28 16L27 13L24 12L27 11L28 8Z" fill="#FCE9B5"/>
+        <path d="M12 28C14 26 16 26 17 24C15 23 13 24 11 26C11 27 11.5 27.5 12 28Z" fill="#E6A5B8"/>
+        <defs>
+          <linearGradient id="moonGrad" x1="2" y1="2" x2="30" y2="38" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#E8C872"/>
+            <stop offset="0.5" stop-color="#B5A4D6"/>
+            <stop offset="1" stop-color="#E6A5B8"/>
+          </linearGradient>
+        </defs>
+      </svg>
+      <div>
+        <span class="name">Maison de l'Aura</span>
+        <span class="tagline">Vintage Cottage & Tarot Haven</span>
+      </div>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="#guide-section">Khởi Duyên</a></li>
+      <li><a href="#ai-tarot">Tarot AI (5k)</a></li>
+      <li><a href="#readers">Master Readers</a></li>
+      <li><a href="#mini-fun">Gieo Quẻ Vui (2k)</a></li>
+      <li><a href="javascript:void(0)" onclick="openHistoryModal()">Nhật Ký Quẻ</a></li>
+    </ul>
+
+    <div class="header-actions">
+      <!-- Sound toggle -->
+      <button class="icon-btn" id="soundToggleBtn" title="Bật/Tắt Âm Thanh" onclick="toggleAudio()">
+        <svg id="soundIcon" width="17" height="17" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+        </svg>
+      </button>
+
+      <!-- Soul Coins Wallet -->
+      <div class="wallet-chip" onclick="openWalletModal()" title="Nhấp để nạp thêm Xu">
+        <span class="coin-icon">✨</span>
+        <span class="balance" id="walletBalanceDisplay">50.000 Xu</span>
+        <span class="add-btn">+</span>
+      </div>
+
+      <!-- Hamburger mobile btn -->
+      <button class="menu-toggle-btn" onclick="toggleMobileMenu()" title="Mở danh mục">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- ==============================================
+         1. HERO SECTION & STACKED DECK NAVIGATION
+         ============================================== -->
+    <section class="hero-section visible" id="hero">
+      <span class="badge-sub">✦ Tiệm Bói Thần Bí Giữa Vườn Cổ Điển ✦</span>
+      <h1 class="hero-title">
+        Lắng Nghe Lời Thì Thầm Vũ Trụ & <span class="text-gradient-gold">Định Đoạt Vận Mệnh</span>
+      </h1>
+      <p class="hero-subtitle">
+        Không gian bói toán phong cách Cottagecore huyền ảo dành cho GenZ. Trải bài AI tức thì chỉ vài nghìn lẻ, gieo quẻ vận hạn, hoặc đặt lịch tham vấn 1-on-1 cùng Master Reader danh tiếng.
+      </p>
+
+      <!-- THE STACKED TAROT CARDS NAVIGATION -->
+      <div class="deck-container-wrap">
+        <div class="deck-instruction">
+          <span>✨</span> Di chuột hoặc chạm vào lá bài để xòe bài & mở tính năng
+        </div>
+
+        <div class="tarot-deck-fan" id="heroDeckFan">
+          <!-- Card 1: Khởi duyên (Guide) -->
+          <div class="stacked-card" data-index="0" onclick="handleCardClick('guide-section', this)">
+            <span class="card-roman">I • KHỞI DUYÊN</span>
+            <div class="card-art-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <circle cx="12" cy="12" r="9"/>
+                <path d="M12 7v5l3 3"/>
+                <circle cx="12" cy="12" r="3" fill="currentColor" opacity="0.3"/>
+              </svg>
+            </div>
+            <div class="card-info-bottom">
+              <div class="card-title">Khởi Duyên</div>
+              <div class="card-price-tag">✦ Miễn Phí Test Vibe ✦</div>
+            </div>
+          </div>
+
+          <!-- Card 2: AI Tarot (5k) -->
+          <div class="stacked-card" data-index="1" onclick="handleCardClick('ai-tarot', this)">
+            <span class="card-roman">II • THẤU SUỐT</span>
+            <div class="card-art-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M12 3l2.5 5 5.5.5-4 4 1 5.5-5-2.5-5 2.5 1-5.5-4-4 5.5-.5L12 3z"/>
+                <circle cx="12" cy="12" r="8" stroke-dasharray="2 3"/>
+              </svg>
+            </div>
+            <div class="card-info-bottom">
+              <div class="card-title">Tarot AI Oracle</div>
+              <div class="card-price-tag">✦ 5.000đ / Lần ✦</div>
+            </div>
+          </div>
+
+          <!-- Card 3: Master Readers (150k - 350k) -->
+          <div class="stacked-card" data-index="2" onclick="handleCardClick('readers', this)">
+            <span class="card-roman">III • TRI KỶ</span>
+            <div class="card-art-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <circle cx="12" cy="8" r="4"/>
+                <path d="M4 20c0-4 4-6 8-6s8 2 8 6"/>
+                <path d="M12 2l1.5 3.5L17 7l-3.5 1.5L12 12l-1.5-3.5L7 7l3.5-1.5L12 2z" fill="currentColor" opacity="0.25"/>
+              </svg>
+            </div>
+            <div class="card-info-bottom">
+              <div class="card-title">Master Reader</div>
+              <div class="card-price-tag">✦ 1-on-1 Chữa Lành ✦</div>
+            </div>
+          </div>
+
+          <!-- Card 4: Bói Vui Lẻ (2k) -->
+          <div class="stacked-card" data-index="3" onclick="handleCardClick('mini-fun', this)">
+            <span class="card-roman">IV • VẬN MAY</span>
+            <div class="card-art-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M8 12a4 4 0 1 0 8 0 4 4 0 0 0-8 0"/>
+                <path d="M12 2v20M2 12h20"/>
+              </svg>
+            </div>
+            <div class="card-info-bottom">
+              <div class="card-title">Gieo Quẻ Vui</div>
+              <div class="card-price-tag">✦ 2.000đ / Quẻ ✦</div>
+            </div>
+          </div>
+
+          <!-- Card 5: Ví & Nhật Ký -->
+          <div class="stacked-card" data-index="4" onclick="handleCardClick('wallet', this)">
+            <span class="card-roman">V • BẢO KHỐ</span>
+            <div class="card-art-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <rect x="3" y="6" width="18" height="13" rx="3"/>
+                <circle cx="16" cy="12.5" r="1.5" fill="currentColor"/>
+                <path d="M7 6V4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2"/>
+              </svg>
+            </div>
+            <div class="card-info-bottom">
+              <div class="card-title">Ví Xu Tinh Tú</div>
+              <div class="card-price-tag">✦ Nạp Tức Thì ✦</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==============================================
+         2. FEATURE 0: GUIDED ONBOARDING (KHỞI DUYÊN)
+         ============================================== -->
+    <section id="guide-section">
+      <div class="section-header">
+        <span class="badge-sub">✦ Hướng Dẫn Trực Giác ✦</span>
+        <h2 class="section-title">Khởi Duyên: Vũ Trụ Nói Gì Về Bạn?</h2>
+        <p class="section-desc">
+          Hãy thả lỏng và trả lời 3 câu hỏi nhanh dưới đây để tiệm bói đo lường tần số năng lượng và dẫn lối bạn đến đúng cổng tính năng bạn đang cần nhất.
+        </p>
+      </div>
+
+      <div class="guide-card-wrap">
+        <div class="guide-progress-bar">
+          <div class="progress-dot active" id="dot1"></div>
+          <div class="progress-dot" id="dot2"></div>
+          <div class="progress-dot" id="dot3"></div>
+          <div class="progress-dot" id="dot4"></div>
+        </div>
+
+        <!-- Question 1 -->
+        <div class="guide-step active" id="step1">
+          <div class="guide-question">1. Tâm tư bạn đang vương vấn điều gì nhiều nhất hôm nay?</div>
+          <div class="guide-options-grid">
+            <div class="guide-opt-btn" onclick="selectGuideOption(1, 'love', 'Tình cảm rối bời, mập mờ')">
+              <span class="opt-icon">🥀</span>
+              <span class="opt-title">Tình Cảm Mập Mờ</span>
+              <span class="opt-desc">Crush có thích mình không? Mối quan hệ này sẽ đi về đâu?</span>
+            </div>
+            <div class="guide-opt-btn" onclick="selectGuideOption(1, 'career', 'Sự nghiệp & Tài lộc bấp bênh')">
+              <span class="opt-icon">🪐</span>
+              <span class="opt-title">Sự Nghiệp & Ví Tiền</span>
+              <span class="opt-desc">Nhảy việc hay ở lại? Khi nào tài lộc mới gõ cửa phòng trọ?</span>
+            </div>
+            <div class="guide-opt-btn" onclick="selectGuideOption(1, 'healing', 'Năng lượng cạn kiệt, mất định hướng')">
+              <span class="opt-icon">🌿</span>
+              <span class="opt-title">Chữa Lành & Bình An</span>
+              <span class="opt-desc">Cảm giác kiệt sức (burnout), cần một cái ôm tinh thần dịu dàng.</span>
+            </div>
+            <div class="guide-opt-btn" onclick="selectGuideOption(1, 'fun', 'Chỉ tò mò muốn xem vận may thôi!')">
+              <span class="opt-icon">🔮</span>
+              <span class="opt-title">Vận May & Giải Trí</span>
+              <span class="opt-desc">Gieo quẻ xem tuần này có biến gì vui hay gặp may mắn gì không.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="guide-step" id="step2">
+          <div class="guide-question">2. Bạn muốn đón nhận thông điệp qua hình thức nào?</div>
+          <div class="guide-options-grid">
+            <div class="guide-opt-btn" onclick="selectGuideOption(2, 'ai', 'Tarot AI tức thì (5.000đ)')">
+              <span class="opt-icon">⚡</span>
+              <span class="opt-title">AI Oracle Tức Thì</span>
+              <span class="opt-desc">Nhanh chóng, chuẩn tâm lý, chi phí chỉ vài nghìn ăn sáng.</span>
+            </div>
+            <div class="guide-opt-btn" onclick="selectGuideOption(2, 'human', 'Trò chuyện cùng Master Reader (1-on-1)')">
+              <span class="opt-icon">☕</span>
+              <span class="opt-title">Master Reader Danh Tiếng</span>
+              <span class="opt-desc">Tâm tình sâu sắc 30 - 60 phút, soi chiếu bài học linh hồn.</span>
+            </div>
+            <div class="guide-opt-btn" onclick="selectGuideOption(2, 'fortune', 'Quẻ xăm / Bánh may mắn (2.000đ)')">
+              <span class="opt-icon">🥠</span>
+              <span class="opt-title">Gieo Quẻ Nhỏ Nhẹ</span>
+              <span class="opt-desc">Chỉ 2k để bóc bánh may mắn hoặc rút xăm cổ tích thư giãn.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Question 3 -->
+        <div class="guide-step" id="step3">
+          <div class="guide-question">3. Chọn một biểu tượng thần hộ mệnh bảo trợ trực giác của bạn:</div>
+          <div class="guide-options-grid">
+            <div class="guide-opt-btn" onclick="selectGuideOption(3, 'moon', 'Trăng Khuyết Bạc')">
+              <span class="opt-icon">🌙</span>
+              <span class="opt-title">Trăng Khuyết Bạc</span>
+              <span class="opt-desc">Trực giác nhạy bén, sâu sắc và giàu cảm xúc.</span>
+            </div>
+            <div class="guide-opt-btn" onclick="selectGuideOption(3, 'sun', 'Hoa Hướng Dương')">
+              <span class="opt-icon">🌻</span>
+              <span class="opt-title">Hoa Hướng Dương</span>
+              <span class="opt-desc">Năng lượng ấm áp, lạc quan, hướng đến bứt phá.</span>
+            </div>
+            <div class="guide-opt-btn" onclick="selectGuideOption(3, 'key', 'Chìa Khóa Cổ Điển')">
+              <span class="opt-icon">🗝️</span>
+              <span class="opt-title">Chìa Khóa Cổ Điển</span>
+              <span class="opt-desc">Tìm kiếm câu trả lời dứt khoát cho khúc mắc hiện tại.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 4: Result & Recommendation -->
+        <div class="guide-step" id="step4">
+          <div class="aura-result-box">
+            <div class="aura-orb-glow" id="auraGlow"></div>
+            <span class="badge-sub" id="auraBadge">NĂNG LƯỢNG THẠCH ANH HỒNG</span>
+            <h3 class="modal-title" id="auraTitle" style="font-size: 26px; margin-top: 10px;">Vũ Trụ Đang Mở Lối Cho Bạn</h3>
+            <p id="auraDesc" style="color: var(--text-muted); max-width: 580px; margin: 0 auto 24px auto; line-height: 1.65; font-size: 14px;">
+              Tần số rung động của bạn đang khao khát được lắng nghe và soi tỏ. Hãy để chúng mình dẫn bạn đến cánh cổng phù hợp nhất!
+            </p>
+            <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+              <button class="btn-magical btn-gold" id="guideActionBtn" onclick="guideJump()">Bắt Đầu Trải Nghiệm →</button>
+              <button class="btn-magical btn-outline-gold" onclick="resetGuide()">Thực Hiện Lại</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==============================================
+         3. FEATURE 1: AI TAROT ORACLE (5.000đ / LẦN)
+         ============================================== -->
+    <section id="ai-tarot">
+      <div class="section-header">
+        <span class="badge-sub">✦ Tiên Tri Công Nghệ Cao ✦</span>
+        <h2 class="section-title">Tarot AI Oracle: Khai Mở Tâm Trí</h2>
+        <p class="section-desc">
+          Chỉ <strong>5.000đ</strong> (hoặc 5.000 Xu) cho một quẻ trải bài 3 lá toàn diện. AI am hiểu biểu tượng học Tarot Rider-Waite kinh điển, đồng cảm và đưa ra giải pháp thực tế.
+        </p>
+      </div>
+
+      <div class="reading-control-panel">
+        <label style="display:block; margin-bottom: 10px; font-weight: 600; color: var(--gold-primary); font-size: 13.5px;">
+          1. Chọn Chủ Đề Bạn Muốn Khai Mở:
+        </label>
+        <div class="category-pills" id="aiTopicPills">
+          <div class="pill-btn active" onclick="setAiCategory('love', this)">❤️ Tình Duyên</div>
+          <div class="pill-btn" onclick="setAiCategory('career', this)">💼 Sự Nghiệp & Tiền Bạc</div>
+          <div class="pill-btn" onclick="setAiCategory('healing', this)">🌱 Chữa Lành</div>
+          <div class="pill-btn" onclick="setAiCategory('general', this)">🔮 Quẻ Tổng Quan</div>
+        </div>
+
+        <div style="margin-bottom: 20px;">
+          <label style="display:block; margin-bottom: 8px; font-weight: 600; color: var(--text-main); font-size: 13.5px;">
+            2. Nhập Câu Hỏi Hoặc Hoàn Cảnh Của Bạn:
+          </label>
+          <textarea class="situation-textarea" id="aiQuestionInput" placeholder="Ví dụ: Mình và người ấy đang im lặng 3 ngày nay. Liệu họ còn tình cảm với mình không và mình nên nhắn tin trước hay chờ đợi?"></textarea>
+        </div>
+
+        <div class="spread-select-wrap">
+          <div>
+            <span style="font-weight: 600; color: var(--gold-primary); display: block; font-size: 13.5px;">Trải Bài 3 Lá Cổ Điển:</span>
+            <span style="font-size: 12px; color: var(--text-muted);">Hiện trạng • Thử thách & Lời khuyên • Xu hướng kết quả</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+            <span style="font-size: 13px; color: var(--rose-cottage); font-weight: 700;">Phí: 5.000 Xu</span>
+            <button class="btn-magical btn-gold" id="startDrawBtn" onclick="startCardDrawSession()">
+              <span>Xáo Bài & Rút Quẻ</span> <span>✨</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- CARD DRAW STAGE -->
+        <div class="card-draw-stage" id="cardDrawStage">
+          <p style="color: var(--gold-primary); font-size: 14.5px; margin-bottom: 6px; font-weight: 600;" id="drawInstructionText">
+            ✦ Chạm vào từng lá bài để lật mở thông điệp của định mệnh ✦
+          </p>
+          <div class="deck-scroll-wrapper" id="drawnCardsGrid">
+            <!-- Drawn Card Slots -->
+            <div class="drawn-slot">
+              <div class="drawn-slot-label">I. Hiện Trạng / Cội Nguồn</div>
+              <div class="tarot-card-flip" id="cardFlip0" onclick="flipTarotCard(0)">
+                <div class="card-face back">
+                  <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#e8c872" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <span style="font-size: 10px; color: var(--gold-primary); letter-spacing: 0.1em;">CHẠM ĐỂ LẬT</span>
+                </div>
+                <div class="card-face front" id="cardFront0"></div>
+              </div>
+            </div>
+
+            <div class="drawn-slot">
+              <div class="drawn-slot-label">II. Lời Khuyên / Ẩn Số</div>
+              <div class="tarot-card-flip" id="cardFlip1" onclick="flipTarotCard(1)">
+                <div class="card-face back">
+                  <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#e8c872" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 0 0 18v-18z"/></svg>
+                  <span style="font-size: 10px; color: var(--gold-primary); letter-spacing: 0.1em;">CHẠM ĐỂ LẬT</span>
+                </div>
+                <div class="card-face front" id="cardFront1"></div>
+              </div>
+            </div>
+
+            <div class="drawn-slot">
+              <div class="drawn-slot-label">III. Xu Hướng / Kết Quả</div>
+              <div class="tarot-card-flip" id="cardFlip2" onclick="flipTarotCard(2)">
+                <div class="card-face back">
+                  <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#e8c872" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                  <span style="font-size: 10px; color: var(--gold-primary); letter-spacing: 0.1em;">CHẠM ĐỂ LẬT</span>
+                </div>
+                <div class="card-face front" id="cardFront2"></div>
+              </div>
+            </div>
+          </div>
+
+          <button class="btn-magical btn-outline-gold" id="autoFlipBtn" onclick="autoFlipAllCards()">
+            Lật Nhanh Cả 3 Lá ✨
+          </button>
+        </div>
+
+        <!-- DETAILED AI INTERPRETATION -->
+        <div class="ai-reading-result" id="aiReadingResult">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 8px;">
+            <span class="badge-sub">✦ BẢN GIẢI QUẺ AI ORACLE ✦</span>
+            <div style="display: flex; gap: 8px;">
+              <button class="btn-magical btn-outline-gold" style="min-height:36px; padding: 4px 12px; font-size: 11.5px;" onclick="saveCurrentReading()">💾 Lưu Quẻ</button>
+              <button class="btn-magical btn-outline-gold" style="min-height:36px; padding: 4px 12px; font-size: 11.5px;" onclick="copyReadingText()">📋 Sao Chép</button>
+            </div>
+          </div>
+
+          <h3 style="font-size: 20px; color: var(--gold-primary); margin-bottom: 16px;">
+            <span id="readingHeaderTitle">Tổng Luận Thông Điệp Vũ Trụ</span>
+          </h3>
+
+          <div class="reading-block">
+            <h4>1. Bức Tranh Năng Lượng</h4>
+            <p id="readingEnergyText">Năng lượng đang được giải mã...</p>
+          </div>
+
+          <div class="reading-block">
+            <h4>2. Luận Giải Từng Lá Bài</h4>
+            <p id="readingCardsText">Đang phân tích liên kết biểu tượng...</p>
+          </div>
+
+          <div class="reading-block">
+            <h4>3. Lời Khuyên Hành Động Thực Tế</h4>
+            <p id="readingAdviceText">Vũ trụ khuyến nghị...</p>
+          </div>
+
+          <div class="reading-block" style="background: rgba(230, 165, 184, 0.08); padding: 14px; border-radius: 12px; border: 1px dashed var(--rose-cottage);">
+            <h4 style="color: var(--gold-sparkle);">✦ Câu Thần Chú Khẳng Định:</h4>
+            <p id="readingAffirmationText" style="font-family: var(--font-serif); font-size: 15px; font-style: italic; color: var(--rose-soft);"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==============================================
+         4. FEATURE 2: MASTER TAROT READERS (180k - 320k)
+         ============================================== -->
+    <section id="readers">
+      <div class="section-header">
+        <span class="badge-sub">✦ Kết Nối Con Người Sâu Sắc ✦</span>
+        <h2 class="section-title">Master Tarot Readers Danh Tiếng</h2>
+        <p class="section-desc">
+          Khi AI chưa thể xoa dịu những ngổn ngang phức tạp, hãy đặt lịch trò chuyện 1-on-1 cùng đội ngũ Reader uy tín, chuyên nghiệp và giàu lòng trắc ẩn của tiệm.
+        </p>
+      </div>
+
+      <!-- Filter tabs -->
+      <div class="readers-filter-bar">
+        <button class="pill-btn active" onclick="filterReaders('all', this)">Tất Cả Readers (3)</button>
+        <button class="pill-btn" onclick="filterReaders('love', this)">Tình Duyên</button>
+        <button class="pill-btn" onclick="filterReaders('career', this)">Sự Nghiệp</button>
+        <button class="pill-btn" onclick="filterReaders('healing', this)">Chữa Lành & Luân Xa</button>
+      </div>
+
+      <div class="readers-grid" id="readersGrid">
+        <!-- Reader 1 -->
+        <div class="reader-card" data-cat="love,healing">
+          <div class="reader-banner" style="background: linear-gradient(135deg, rgba(230, 165, 184, 0.4), rgba(30, 20, 45, 0.8));">
+            <span class="reader-badge-top">⭐ Top 1 Tình Cảm</span>
+            <div class="reader-avatar-wrap">
+              <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="100" height="100" fill="#2d1d36"/>
+                <circle cx="50" cy="42" r="20" fill="#fad2cf"/>
+                <path d="M50 20C40 20 30 28 30 45C30 55 35 62 40 64C42 55 45 48 50 48C55 48 58 55 60 64C65 62 70 55 70 45C70 28 60 20 50 20Z" fill="#58315a"/>
+                <path d="M22 92C22 75 35 68 50 68C65 68 78 75 78 92" fill="#e6a5b8"/>
+                <circle cx="50" cy="18" r="4" fill="#ffd700"/>
+              </svg>
+            </div>
+          </div>
+          <div class="reader-body">
+            <h3 class="reader-name">Master Selene (Hoàng Linh)</h3>
+            <span class="reader-title-specialty">Chuyên Gia Tình Cảm & Chữa Lành Đứa Trẻ Bên Trong</span>
+            <div class="reader-stats">
+              <span>⭐ <strong>4.99</strong> (280+ lượt)</span>
+              <span>🌿 <strong>7 năm</strong> exp</span>
+            </div>
+            <p class="reader-bio">
+              Đồng hành cùng hàng trăm bạn trẻ gỡ rối các mối quan hệ Karmic, Twin Flame và tái kết nối trực giác dịu êm. Giọng nói truyền cảm, ấm áp.
+            </p>
+            <div class="reader-tags">
+              <span class="reader-tag">Tình Cảm Mập Mờ</span>
+              <span class="reader-tag">Inner Child</span>
+              <span class="reader-tag">Reiki</span>
+            </div>
+            <div class="reader-pricing-footer">
+              <div>
+                <span class="reader-price-value">180.000đ</span>
+                <span class="reader-price-unit">/ Buổi 30p</span>
+              </div>
+              <button class="btn-magical btn-gold" style="padding: 7px 16px; font-size: 13px;" onclick="openBookingModal('Master Selene', 180000)">Đặt Lịch →</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Reader 2 -->
+        <div class="reader-card" data-cat="career">
+          <div class="reader-banner" style="background: linear-gradient(135deg, rgba(34, 67, 55, 0.7), rgba(20, 30, 45, 0.9));">
+            <span class="reader-badge-top">🚀 Cố Vấn Sự Nghiệp</span>
+            <div class="reader-avatar-wrap">
+              <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="100" height="100" fill="#152723"/>
+                <circle cx="50" cy="40" r="19" fill="#f5d6ba"/>
+                <path d="M34 32C34 22 42 16 50 16C58 16 66 22 66 32C66 36 62 42 50 42C38 42 34 36 34 32Z" fill="#1b2a32"/>
+                <path d="M22 92C22 74 34 66 50 66C66 66 78 74 78 92" fill="#2d5246"/>
+                <polygon points="50 68 53 78 47 78" fill="#d4af37"/>
+              </svg>
+            </div>
+          </div>
+          <div class="reader-body">
+            <h3 class="reader-name">Liam Thorne (Minh Triết)</h3>
+            <span class="reader-title-specialty">Định Hướng Sự Nghiệp, Startup & Tài Chính GenZ</span>
+            <div class="reader-stats">
+              <span>⭐ <strong>4.97</strong> (195+ lượt)</span>
+              <span>💼 <strong>5 năm</strong> exp</span>
+            </div>
+            <p class="reader-bio">
+              Kết hợp tư duy logic từ cựu Business Analyst cùng trực giác sắc bén từ Tarot. Giúp bạn nhìn rõ lộ trình công việc và thời điểm nhảy việc đại cát.
+            </p>
+            <div class="reader-tags">
+              <span class="reader-tag">Chuyển Ngành</span>
+              <span class="reader-tag">Tài Chính GenZ</span>
+            </div>
+            <div class="reader-pricing-footer">
+              <div>
+                <span class="reader-price-value">220.000đ</span>
+                <span class="reader-price-unit">/ Buổi 45p</span>
+              </div>
+              <button class="btn-magical btn-gold" style="padding: 7px 16px; font-size: 13px;" onclick="openBookingModal('Liam Thorne', 220000)">Đặt Lịch →</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Reader 3 -->
+        <div class="reader-card" data-cat="love,career,healing">
+          <div class="reader-banner" style="background: linear-gradient(135deg, rgba(181, 164, 214, 0.5), rgba(40, 25, 60, 0.9));">
+            <span class="reader-badge-top">✨ Đại Sư Chiêm Tinh</span>
+            <div class="reader-avatar-wrap">
+              <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="100" height="100" fill="#201736"/>
+                <circle cx="50" cy="42" r="19" fill="#fce4d6"/>
+                <path d="M30 45C30 25 40 18 50 18C60 18 70 25 70 45C70 65 50 60 50 60C50 60 30 65 30 45Z" fill="#4a3b68"/>
+                <path d="M20 95C20 76 34 68 50 68C66 68 80 76 80 95" fill="#755f9e"/>
+                <circle cx="50" cy="30" r="3" fill="#e8c872"/>
+              </svg>
+            </div>
+          </div>
+          <div class="reader-body">
+            <h3 class="reader-name">Luna Caelum (Thảo Cát)</h3>
+            <span class="reader-title-specialty">Bản Đồ Sao Chiêm Tinh Tây Phương & Thần Số Học</span>
+            <div class="reader-stats">
+              <span>⭐ <strong>5.0</strong> (320+ lượt)</span>
+              <span>🔮 <strong>8 năm</strong> exp</span>
+            </div>
+            <p class="reader-bio">
+              Giải mã vận mệnh chuyên sâu qua việc kết hợp Natal Chart cá nhân, chu kỳ hành tinh và bài Tarot Tây Âu cổ điển. Mang lại tầm nhìn sáng tỏ 360 độ.
+            </p>
+            <div class="reader-tags">
+              <span class="reader-tag">Bản Đồ Sao</span>
+              <span class="reader-tag">Năm Cá Nhân</span>
+            </div>
+            <div class="reader-pricing-footer">
+              <div>
+                <span class="reader-price-value">320.000đ</span>
+                <span class="reader-price-unit">/ Buổi 60p</span>
+              </div>
+              <button class="btn-magical btn-gold" style="padding: 7px 16px; font-size: 13px;" onclick="openBookingModal('Luna Caelum', 320000)">Đặt Lịch →</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==============================================
+         5. FEATURE 3: MINI FUN FORTUNES (2.000đ - 3.000đ)
+         ============================================== -->
+    <section id="mini-fun">
+      <div class="section-header">
+        <span class="badge-sub">✦ Tiền Lẻ Rước May Mắn ✦</span>
+        <h2 class="section-title">Gieo Quẻ Vui & Bánh May Mắn Vũ Trụ</h2>
+        <p class="section-desc">
+          Chỉ <strong>2.000đ - 3.000đ</strong> để nạp chút phép màu cho ngày mới: lắc ống xăm linh cổ truyền, bẻ bánh may mắn giòn tan, hoặc tính độ hợp đôi cung hoàng đạo.
+        </p>
+      </div>
+
+      <div class="mini-tabs-nav">
+        <button class="mini-tab-btn active" onclick="switchMiniGame('cylinder', this)">
+          <span>🎋</span> Ống Xăm Cổ Điển (2k)
+        </button>
+        <button class="mini-tab-btn" onclick="switchMiniGame('cookie', this)">
+          <span>🥠</span> Bánh May Mắn (2k)
+        </button>
+        <button class="mini-tab-btn" onclick="switchMiniGame('zodiac', this)">
+          <span>💫</span> So Quẻ Cung Hoàng Đạo (3k)
+        </button>
+      </div>
+
+      <!-- Game Stage 1: Ống Xăm -->
+      <div class="mini-game-stage" id="stageCylinder">
+        <p style="color: var(--gold-primary); margin-bottom: 18px; font-size: 14px;">
+          ✦ Thành tâm hướng về điều bạn mong cầu và chạm vào ống xăm để lắc thẻ ✦
+        </p>
+        <div class="cylinder-box" id="cylinderBox" onclick="shakeCylinder()">
+          <div class="bamboo-stick" id="bambooStick">XĂM</div>
+        </div>
+        <button class="btn-magical btn-gold" onclick="shakeCylinder()">
+          Lắc Ống Xăm (2.000 Xu) ✨
+        </button>
+
+        <div class="mini-result-parchment" id="cylinderResult">
+          <span class="badge-sub" style="margin-bottom: 6px;" id="stickNumberBadge">QUẺ SỐ 28 • ĐẠI CÁT</span>
+          <h4 id="stickTitle" style="color: #8c5d1e; font-size: 18px;">Gió Xuân Thổi Về Hoa Nở Rộ</h4>
+          <div class="mini-poem" id="stickPoem">
+            "Mây mù tan biến ánh trăng trong<br>
+            Cầu tài đắc lộc thỏa ước mong<br>
+            Người xưa tương ngộ duyên tao ngộ<br>
+            Vạn sự hanh thông rạng đóa hồng."
+          </div>
+          <p class="mini-interpretation" id="stickDesc" style="font-size: 13px; line-height: 1.5; color: #332a1e;">
+            <strong>Lời dịch nghĩa GenZ:</strong> Mọi áp lực bấy lâu nay của bạn đang bước vào giai đoạn tháo gỡ. Trong vòng 7 ngày tới, có quý nhân mang đến tin vui về công việc hoặc người yêu cũ muốn mở lời làm hòa. Giữ vững phong độ nhé!
+          </p>
+        </div>
+      </div>
+
+      <!-- Game Stage 2: Bánh May Mắn -->
+      <div class="mini-game-stage" id="stageCookie" style="display: none;">
+        <p style="color: var(--gold-primary); margin-bottom: 18px; font-size: 14px;">
+          ✦ Chiếc bánh nướng thần bí ẩn chứa thông điệp ngẫu nhiên dành riêng cho bạn hôm nay ✦
+        </p>
+        <div class="cookie-interactive" id="cookieElement" onclick="crackCookie()">
+          <svg class="cookie-svg" viewBox="0 0 100 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15 45C10 25 35 10 50 15C65 10 90 25 85 45C80 65 60 70 50 55C40 70 20 65 15 45Z" fill="#E6BE8A" stroke="#B08D57" stroke-width="2"/>
+            <path d="M50 15C48 30 48 40 50 55" stroke="#9A7B4F" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="35" cy="35" r="1.5" fill="#9A7B4F"/>
+            <circle cx="65" cy="35" r="1.5" fill="#9A7B4F"/>
+            <circle cx="50" cy="30" r="1.5" fill="#9A7B4F"/>
+          </svg>
+        </div>
+        <button class="btn-magical btn-gold" onclick="crackCookie()">
+          Bẻ Bánh Khai Vận (2.000 Xu) 🥠
+        </button>
+
+        <div class="mini-result-parchment" id="cookieResult">
+          <span class="badge-sub">✦ THÔNG ĐIỆP BÁNH MAY MẮN ✦</span>
+          <h4 id="cookieQuote" style="margin-top: 8px; font-size: 16px; font-style: italic; color: #5c3d10;">
+            "Điều bạn đang tìm kiếm cũng đang mải miết đi tìm bạn. Hãy thả lỏng bờ vai và mỉm cười."
+          </h4>
+          <div style="margin-top: 14px; font-size: 12.5px; color: #443; display: flex; justify-content: space-around; border-top: 1px dashed #d4af37; padding-top: 10px;">
+            <span>🎲 Số may mắn: <strong id="cookieNumbers" style="color: #b8860b;">07 • 22 • 88</strong></span>
+            <span>🎨 Màu hộ mệnh: <strong id="cookieColor" style="color: #c71585;">Hồng Thạch Anh</strong></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Game Stage 3: So Quẻ Cung Hoàng Đạo -->
+      <div class="mini-game-stage" id="stageZodiac" style="display: none;">
+        <p style="color: var(--gold-primary); margin-bottom: 18px; font-size: 14px;">
+          ✦ Chọn Cung Hoàng Đạo của bạn và đối phương để tính chỉ số hòa hợp vũ trụ ✦
+        </p>
+        <div class="zodiac-form-wrap">
+          <div>
+            <label style="font-size: 11.5px; color: var(--rose-cottage); display: block; margin-bottom: 5px; font-weight: 600;">CUNG CỦA BẠN</label>
+            <select class="zodiac-select" id="zodiacYou">
+              <option value="Bạch Dương">♈ Bạch Dương (Aries)</option>
+              <option value="Kim Ngưu">♉ Kim Ngưu (Taurus)</option>
+              <option value="Song Tử">♊ Song Tử (Gemini)</option>
+              <option value="Cự Giải">♋ Cự Giải (Cancer)</option>
+              <option value="Sư Tử" selected>♌ Sư Tử (Leo)</option>
+              <option value="Xử Nữ">♍ Xử Nữ (Virgo)</option>
+              <option value="Thiên Bình">♎ Thiên Bình (Libra)</option>
+              <option value="Bọ Cạp">♏ Bọ Cạp (Scorpio)</option>
+              <option value="Nhân Mã">♐ Nhân Mã (Sagittarius)</option>
+              <option value="Ma Kết">♑ Ma Kết (Capricorn)</option>
+              <option value="Bảo Bình">♒ Bảo Bình (Aquarius)</option>
+              <option value="Song Ngư">♓ Song Ngư (Pisces)</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size: 11.5px; color: var(--rose-cottage); display: block; margin-bottom: 5px; font-weight: 600;">CUNG ĐỐI PHƯƠNG (CRUSH)</label>
+            <select class="zodiac-select" id="zodiacCrush">
+              <option value="Bạch Dương">♈ Bạch Dương (Aries)</option>
+              <option value="Kim Ngưu">♉ Kim Ngưu (Taurus)</option>
+              <option value="Song Tử">♊ Song Tử (Gemini)</option>
+              <option value="Cự Giải">♋ Cự Giải (Cancer)</option>
+              <option value="Sư Tử">♌ Sư Tử (Leo)</option>
+              <option value="Xử Nữ">♍ Xử Nữ (Virgo)</option>
+              <option value="Thiên Bình" selected>♎ Thiên Bình (Libra)</option>
+              <option value="Bọ Cạp">♏ Bọ Cạp (Scorpio)</option>
+              <option value="Nhân Mã">♐ Nhân Mã (Sagittarius)</option>
+              <option value="Ma Kết">♑ Ma Kết (Capricorn)</option>
+              <option value="Bảo Bình">♒ Bảo Bình (Aquarius)</option>
+              <option value="Song Ngư">♓ Song Ngư (Pisces)</option>
+            </select>
+          </div>
+        </div>
+
+        <button class="btn-magical btn-gold" style="margin-top: 20px;" onclick="calculateZodiacMatch()">
+          Tính Độ Hợp Đôi (3.000 Xu) 💖
+        </button>
+
+        <div class="mini-result-parchment" id="zodiacResult">
+          <span class="badge-sub" id="zodiacMatchScore">TỈ LỆ HÒA HỢP: 94% • TRỜI SINH MỘT CẶP</span>
+          <h4 id="zodiacPairTitle" style="color: #8c5d1e; font-size: 18px;">Sư Tử & Thiên Bình</h4>
+          <p class="mini-interpretation" id="zodiacAnalysis" style="margin-top: 8px; font-size: 13px; line-height: 1.5; color: #332a1e;">
+            Lửa của Sư Tử được gió của Thiên Bình thổi bùng rực rỡ! Hai bạn có sự hấp dẫn tự nhiên về thẩm mỹ và phong cách sống. Thiên Bình xoa dịu cái tôi của Sư Tử, còn Sư Tử cho Thiên Bình cảm giác được che chở vững vàng.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==============================================
+       6. MODALS
+       ============================================== -->
+
+  <!-- MODAL: WALLET & TOP-UP -->
+  <div class="modal-backdrop" id="walletModal">
+    <div class="modal-window">
+      <button class="modal-close-btn" onclick="closeModal('walletModal')">✕</button>
+      <span class="badge-sub">✦ VÍ XU TINH TÚ ✦</span>
+      <h3 class="modal-title">Nạp Năng Lượng & Điểm Xu</h3>
+      <p class="modal-sub">
+        Số dư hiện tại: <strong class="text-gold" id="modalBalanceDisplay" style="font-size: 17px;">50.000 Xu</strong>
+        <br><span style="font-size: 11.5px; color: var(--rose-cottage);">Tỷ lệ: 1.000 VNĐ = 1.000 Xu thần bí</span>
+      </p>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 18px;">
+        <div class="guide-opt-btn" onclick="selectTopUpPackage(20000, 25000, this)">
+          <span class="opt-title">20.000 VNĐ</span>
+          <span style="font-size: 13px; font-weight: 700; color: #ffd700;">Nhận 25.000 Xu</span>
+          <span class="opt-desc">+5.000 Xu</span>
+        </div>
+        <div class="guide-opt-btn selected" onclick="selectTopUpPackage(50000, 70000, this)">
+          <span class="opt-title">50.000 VNĐ</span>
+          <span style="font-size: 13px; font-weight: 700; color: #ffd700;">Nhận 70.000 Xu</span>
+          <span class="opt-desc text-rose">★ Phổ biến (+20k)</span>
+        </div>
+        <div class="guide-opt-btn" onclick="selectTopUpPackage(100000, 150000, this)">
+          <span class="opt-title">100.000 VNĐ</span>
+          <span style="font-size: 13px; font-weight: 700; color: #ffd700;">Nhận 150.000 Xu</span>
+          <span class="opt-desc">+50.000 Xu</span>
+        </div>
+        <div class="guide-opt-btn" onclick="selectTopUpPackage(200000, 350000, this)">
+          <span class="opt-title">200.000 VNĐ</span>
+          <span style="font-size: 13px; font-weight: 700; color: #ffd700;">Nhận 350.000 Xu</span>
+          <span class="opt-desc">VIP (+150k)</span>
+        </div>
+      </div>
+
+      <!-- VietQR Mock Card -->
+      <div class="qr-payment-card">
+        <div style="font-size: 11px; font-weight: 700; color: #0b4f30; text-transform: uppercase;">
+          Cổng Thanh Toán VietQR Tự Động 24/7
+        </div>
+        <div class="qr-image-mock">
+          <svg width="130" height="130" viewBox="0 0 100 100" fill="#111">
+            <rect x="0" y="0" width="30" height="30" fill="#000"/>
+            <rect x="5" y="5" width="20" height="20" fill="#fff"/>
+            <rect x="10" y="10" width="10" height="10" fill="#000"/>
+            <rect x="70" y="0" width="30" height="30" fill="#000"/>
+            <rect x="75" y="5" width="20" height="20" fill="#fff"/>
+            <rect x="80" y="10" width="10" height="10" fill="#000"/>
+            <rect x="0" y="70" width="30" height="30" fill="#000"/>
+            <rect x="5" y="75" width="20" height="20" fill="#fff"/>
+            <rect x="10" y="80" width="10" height="10" fill="#000"/>
+            <rect x="40" y="15" width="8" height="8"/>
+            <rect x="52" y="25" width="10" height="6"/>
+            <rect x="40" y="40" width="20" height="20"/>
+            <rect x="65" y="45" width="8" height="15"/>
+            <rect x="40" y="75" width="15" height="10"/>
+            <rect x="75" y="75" width="15" height="15"/>
+          </svg>
+        </div>
+        <div style="font-size: 12px; color: #555;">
+          MBBank • STK: <strong>8888.6666.9999</strong><br>
+          Nội dung CK: <strong id="qrTransferCode" style="color: #c99e32;">AURA50K_8392</strong>
+        </div>
+      </div>
+
+      <button class="btn-magical btn-gold" style="width: 100%;" onclick="confirmTopUpAction()">
+        Xác Nhận Đã Chuyển Khoản (Cộng Xu Tức Thì) ✨
+      </button>
+    </div>
+  </div>
+
+  <!-- MODAL: BOOKING MASTER READER -->
+  <div class="modal-backdrop" id="bookingModal">
+    <div class="modal-window">
+      <button class="modal-close-btn" onclick="closeModal('bookingModal')">✕</button>
+      <span class="badge-sub">✦ ĐẶT LỊCH HẸN TRỰC TIẾP ✦</span>
+      <h3 class="modal-title" id="bookingReaderName">Đặt Lịch Cùng Reader</h3>
+      <p class="modal-sub" id="bookingPriceText">Phí dịch vụ: 180.000 VNĐ</p>
+
+      <div style="margin-bottom: 14px;">
+        <label style="font-size: 12px; color: var(--gold-primary); font-weight: 600; display: block; margin-bottom: 5px;">
+          1. CHỌN HÌNH THỨC THAM VẤN:
+        </label>
+        <select class="zodiac-select" id="bookingModeSelect">
+          <option value="Google Meet">🎥 Video Call riêng tư qua Google Meet</option>
+          <option value="Zoom">🎥 Video Call qua Zoom</option>
+          <option value="Voice Telegram">🎙️ Voice Call kín đáo (Telegram/Zalo)</option>
+          <option value="Audio Recording">🎧 Bản thu âm Audio chi tiết gửi email</option>
+        </select>
+      </div>
+
+      <div style="margin-bottom: 14px;">
+        <label style="font-size: 12px; color: var(--gold-primary); font-weight: 600; display: block; margin-bottom: 5px;">
+          2. CHỌN NGÀY HẸN:
+        </label>
+        <select class="zodiac-select" id="bookingDateSelect">
+          <option value="Hôm nay (Tối nay 20:00 - 22:00)">Hôm nay • Tối nay</option>
+          <option value="Ngày mai (08/10/2026)">Ngày mai • 08 Tháng 10</option>
+          <option value="Thứ Bảy (10/10/2026)">Thứ Bảy • Cuối tuần</option>
+          <option value="Chủ Nhật (11/10/2026)">Chủ Nhật • Cuối tuần</option>
+        </select>
+      </div>
+
+      <div>
+        <label style="font-size: 12px; color: var(--gold-primary); font-weight: 600; display: block; margin-bottom: 5px;">
+          3. CHỌN KHUNG GIỜ:
+        </label>
+        <div class="booking-slot-grid" id="bookingSlots">
+          <div class="slot-pill selected" onclick="selectSlot(this)">09:30 AM</div>
+          <div class="slot-pill" onclick="selectSlot(this)">14:00 PM</div>
+          <div class="slot-pill" onclick="selectSlot(this)">16:30 PM</div>
+          <div class="slot-pill" onclick="selectSlot(this)">19:30 PM</div>
+          <div class="slot-pill" onclick="selectSlot(this)">21:00 PM</div>
+        </div>
+      </div>
+
+      <div style="margin-bottom: 18px;">
+        <label style="font-size: 12px; color: var(--gold-primary); font-weight: 600; display: block; margin-bottom: 5px;">
+          4. THÔNG TIN CỦA BẠN:
+        </label>
+        <input type="text" class="zodiac-select" id="seekerName" placeholder="Tên hoặc Biệt danh" style="margin-bottom: 8px;">
+        <input type="text" class="zodiac-select" id="seekerContact" placeholder="Số Zalo hoặc Telegram nhận link phòng">
+      </div>
+
+      <button class="btn-magical btn-gold" style="width: 100%;" onclick="confirmBookingAppointment()">
+        Xác Nhận & Đặt Lịch Ngay ✨
+      </button>
+    </div>
+  </div>
+
+  <!-- MODAL: APPOINTMENT CONFIRMATION TICKET -->
+  <div class="modal-backdrop" id="ticketModal">
+    <div class="modal-window" style="text-align: center;">
+      <button class="modal-close-btn" onclick="closeModal('ticketModal')">✕</button>
+      <div style="font-size: 36px; margin-bottom: 8px;">🎟️</div>
+      <span class="badge-sub">✦ ĐẶT LỊCH THÀNH CÔNG ✦</span>
+      <h3 class="modal-title">Vé Tham Vấn Tâm Hồn</h3>
+      <p class="modal-sub">Mã lịch hẹn: <strong class="text-gold" id="ticketCode">AURA-83921</strong></p>
+
+      <div style="background: rgba(255,255,255,0.04); border: 1px dashed var(--border-gold); border-radius: 12px; padding: 16px; text-align: left; margin-bottom: 20px; font-size: 13.5px; line-height: 1.7;">
+        <div>👤 Reader: <strong id="ticketReader" class="text-gold">Master Selene</strong></div>
+        <div>🗓️ Thời gian: <strong id="ticketTime" class="text-rose">19:30 PM - Ngày mai</strong></div>
+        <div>🔗 Kênh kết nối: <strong id="ticketMode">Google Meet (Link gửi qua Zalo)</strong></div>
+        <div>✨ Người đặt: <strong id="ticketSeeker">Bạn</strong></div>
+      </div>
+
+      <button class="btn-magical btn-gold" onclick="closeModal('ticketModal')">Hoàn Tất</button>
+    </div>
+  </div>
+
+  <!-- MODAL: READING HISTORY -->
+  <div class="modal-backdrop" id="historyModal">
+    <div class="modal-window">
+      <button class="modal-close-btn" onclick="closeModal('historyModal')">✕</button>
+      <span class="badge-sub">✦ LƯU TRỮ VẬN MỆNH ✦</span>
+      <h3 class="modal-title">Nhật Ký Quẻ Của Bạn</h3>
+      <p class="modal-sub">Danh sách các quẻ Tarot và điềm báo đã xem trong phiên hoạt động này.</p>
+      <div id="historyListContainer" style="display: flex; flex-direction: column; gap: 12px; max-height: 350px; overflow-y: auto;"></div>
+    </div>
+  </div>
+
+  <!-- MODAL: CONTACT SANCTUARY -->
+  <div class="modal-backdrop" id="contactModal">
+    <div class="modal-window">
+      <button class="modal-close-btn" onclick="closeModal('contactModal')">✕</button>
+      <span class="badge-sub">✦ KẾT NỐI VỚI CHÚNG MÌNH ✦</span>
+      <h3 class="modal-title">Tiệm Trà & Tarot Maison de l'Aura</h3>
+      <p class="modal-sub">Nơi bình yên luôn mở cửa đón chào những tâm hồn tìm kiếm câu trả lời.</p>
+
+      <div style="font-size: 13.5px; line-height: 1.7; color: var(--text-main); margin-bottom: 20px;">
+        <p>📍 <strong>Địa chỉ vườn cổ tích:</strong> Số 18/4 Đường Thảo Điền, P. Thảo Điền, TP. Thủ Đức, TP. Hồ Chí Minh</p>
+        <p>📞 <strong>Hotline / Zalo hỗ trợ:</strong> 0988.234.567 (Hỗ trợ 08:00 - 23:00 hàng ngày)</p>
+        <p>💌 <strong>Email hỗ trợ:</strong> sanctuary@maisondelaura.vn</p>
+        <p>🌿 <strong>Instagram:</strong> @maisondelaura.tarot (240k followers)</p>
+      </div>
+
+      <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-gold); padding: 14px; border-radius: 12px;">
+        <label style="font-size: 12px; color: var(--gold-primary); font-weight: 600; display: block; margin-bottom: 6px;">Gửi Tin Nhắn Cho Tiệm:</label>
+        <textarea id="contactMsgInput" class="situation-textarea" style="height: 65px;" placeholder="Góp ý hoặc thắc mắc về dịch vụ..."></textarea>
+        <button class="btn-magical btn-gold" style="width: 100%; margin-top: 10px;" onclick="sendContactMessage()">Gửi Lời Nhắn Đến Vũ Trụ ✨</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: DISCLAIMER & ETHICAL POLICY -->
+  <div class="modal-backdrop" id="disclaimerModal">
+    <div class="modal-window">
+      <button class="modal-close-btn" onclick="closeModal('disclaimerModal')">✕</button>
+      <span class="badge-sub">✦ BẢO MẬT & PHÁP LÝ ✦</span>
+      <h3 class="modal-title">Chính Sách Miễn Trừ Trách Nhiệm</h3>
+      <div style="font-size: 13px; line-height: 1.65; color: var(--text-muted); max-height: 350px; overflow-y: auto; padding-right: 6px;">
+        <p style="margin-bottom: 10px;">
+          <strong>1. Tính chất tham khảo & Thư giãn tinh thần:</strong> Các dịch vụ trải bài Tarot (cả AI lẫn Master Reader), gieo quẻ xăm, bánh may mắn và chiêm tinh học trên Maison de l'Aura được xây dựng nhằm mục đích chiêm nghiệm, khai mở trực giác và giải trí tinh thần lành mạnh.
+        </p>
+        <p style="margin-bottom: 10px;">
+          <strong>2. Không thay thế tư vấn chuyên môn:</strong> Thông điệp từ các lá bài không phải là lời khuyên mang tính pháp lý, y tế, chẩn đoán tâm thần hoặc quyết định đầu tư tài chính sinh tử. Quý khách hàng tự chịu trách nhiệm hoàn toàn đối với mọi hành vi và quyết định trong cuộc sống thực tế của mình.
+        </p>
+        <p style="margin-bottom: 10px;">
+          <strong>3. Cam kết bảo mật danh tính 100%:</strong> Mọi câu hỏi, hoàn cảnh riêng tư và danh tính của người tham gia đều được tôn trọng tuyệt đối. Không lưu trữ bản ghi âm các phiên tư vấn 1-on-1 mà không có sự đồng ý của khách hàng.
+        </p>
+        <p>
+          <strong>4. Chính sách hoàn tiền:</strong> Nếu phiên tham vấn với Master Reader bị gián đoạn do lỗi kỹ thuật hoặc Reader không tham gia đúng giờ, Maison de l'Aura cam kết hoàn 100% chi phí hoặc sắp xếp lại buổi mới miễn phí theo yêu cầu.
+        </p>
+      </div>
+      <button class="btn-magical btn-gold" style="width: 100%; margin-top: 18px;" onclick="closeModal('disclaimerModal')">Tôi Đã Hiểu Và Đồng Ý</button>
+    </div>
+  </div>
+
+  <!-- ==============================================
+       7. FLOATING CUSTOMER SUPPORT (TIỂU LINH THÚ)
+       ============================================== -->
+  <div class="support-floating-bubble">
+    <div class="support-chat-box" id="supportChatBox">
+      <div class="chat-header">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-size: 18px;">🐱</span>
+          <div>
+            <div style="font-size: 12.5px; font-weight: 700; color: var(--gold-primary);">Linh Thú Lune</div>
+            <div style="font-size: 10px; color: var(--rose-cottage);">Trợ lý trực tuyến 24/7</div>
+          </div>
+        </div>
+        <button style="background:none; border:none; color:#aaa; font-size:16px; cursor:pointer;" onclick="toggleSupportChat()">✕</button>
+      </div>
+
+      <div class="chat-body" id="chatBody">
+        <div class="chat-msg bot">
+          Dạ chào bạn nhen! Mình là Bé Mèo Lune 🌙. Bạn cần mình chỉ đường nạp xu, xem bói hay đặt lịch Master Reader hông nè?
+        </div>
+      </div>
+
+      <div class="chat-quick-chips">
+        <span class="chat-chip" onclick="askSupportBot('Nạp xu như thế nào?')">Nạp xu thế nào?</span>
+        <span class="chat-chip" onclick="askSupportBot('Tarot AI có chuẩn không?')">Tarot AI chuẩn ko?</span>
+        <span class="chat-chip" onclick="askSupportBot('Cách đổi lịch Reader?')">Đổi lịch Reader?</span>
+      </div>
+
+      <div class="chat-input-bar">
+        <input type="text" id="chatInput" placeholder="Nhập câu hỏi..." onkeydown="if(event.key==='Enter') sendUserChatMessage()">
+        <button onclick="sendUserChatMessage()">➤</button>
+      </div>
+    </div>
+
+    <button class="support-trigger-btn" onclick="toggleSupportChat()" title="Trợ lý Linh Thú">
+      <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+        <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/>
+        <path d="M12 7l1.5 3 3 1.5-3 1.5-1.5 3-1.5-3-3-1.5 3-1.5 1.5-3z"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- ==============================================
+       8. FOOTER
+       ============================================== -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-col">
+        <a href="#hero" class="brand-logo" style="margin-bottom: 12px;">
+          <span class="name" style="font-size: 20px;">Maison de l'Aura</span>
+        </a>
+        <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; max-width: 380px;">
+          Nơi gặp gỡ giữa nghệ thuật huyền bí cổ điển và trải nghiệm công nghệ tinh gọn thời đại số. Giữ cho tâm hồn bạn một góc vườn nở hoa và soi sáng từng bước đi.
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <h5>Dịch Vụ</h5>
+        <ul class="footer-links">
+          <li><a href="#ai-tarot">Tarot AI Oracle (5k)</a></li>
+          <li><a href="#readers">Master Readers (1-on-1)</a></li>
+          <li><a href="#mini-fun">Gieo Quẻ Xăm Linh (2k)</a></li>
+          <li><a href="#mini-fun">Bánh May Mắn Vũ Trụ (2k)</a></li>
+          <li><a href="javascript:void(0)" onclick="openWalletModal()">Nạp Xu Tinh Tú</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>Hỗ Trợ & Kết Nối</h5>
+        <ul class="footer-links">
+          <li><a href="javascript:void(0)" onclick="openContactModal()">Liên Hệ Tiệm Trà</a></li>
+          <li><a href="javascript:void(0)" onclick="toggleSupportChat()">Trò Chuyện Cùng Linh Thú</a></li>
+          <li><a href="javascript:void(0)" onclick="openHistoryModal()">Xem Lịch Sử Quẻ</a></li>
+          <li><a href="javascript:void(0)" onclick="openDisclaimerModal()">Chính Sách Hoàn Tiền</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>Pháp Lý & Bảo Mật</h5>
+        <ul class="footer-links">
+          <li><a href="javascript:void(0)" onclick="openDisclaimerModal()">Miễn Trừ Trách Nhiệm</a></li>
+          <li><a href="javascript:void(0)" onclick="openDisclaimerModal()">Bảo Mật Quyền Riêng Tư</a></li>
+          <li><a href="javascript:void(0)" onclick="openDisclaimerModal()">Quy Chuẩn Đạo Đức</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div>© 2026 Maison de l'Aura. Bản quyền thuộc về Tiệm Bói Thần Bí & Tarot Sanctuary.</div>
+      <div>Tối ưu hóa hiển thị cho mọi dòng điện thoại iOS & Android.</div>
+    </div>
+  </footer>
+
+  <!-- ==============================================
+       JAVASCRIPT LOGIC
+       ============================================== -->
+  <script>
+    /* ----------------------------------------------------
+       1. DATA STRUCTURES
+       ---------------------------------------------------- */
+    const TAROT_CARDS = [
+      {
+        num: "0", roman: "0 • THE FOOL", nameVi: "Kẻ Khờ", nameEn: "The Fool",
+        keywords: "Khởi đầu mới, can đảm, tự do, trực giác",
+        iconSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>`,
+        energy: "Một bước ngoặt tinh thần mới đang mở ra. Hãy buông bỏ những sợ hãi logic và tin tưởng vào tiếng gọi thuần khiết bên trong.",
+        advice: "Đừng ngần ngại thử sức với hướng đi mới dù người ngoài có thể thấy lạ lùng."
+      },
+      {
+        num: "I", roman: "I • THE MAGICIAN", nameVi: "Phù Thủy", nameEn: "The Magician",
+        keywords: "Ý chí, kiến tạo, tiềm năng dồi dào, hành động",
+        iconSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v20M2 12h20"/><circle cx="12" cy="12" r="5"/></svg>`,
+        energy: "Bạn đã sở hữu đầy đủ mọi công cụ để giải quyết trọn vẹn tình thế này. Đã đến lúc biến ý niệm thành hành động cụ thể.",
+        advice: "Hãy tự tin chủ động thương thảo hoặc nhắn tin kết nối ngay bây giờ."
+      },
+      {
+        num: "II", roman: "II • THE HIGH PRIESTESS", nameVi: "Nữ Tư Tế", nameEn: "The High Priestess",
+        keywords: "Trực giác, bí mật, điềm tĩnh, giấc mơ",
+        iconSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`,
+        energy: "Có những sự thật ẩn giấu chưa hiển lộ trên bề mặt. Câu trả lời nằm ở cảm giác trực giác đầu tiên của bạn.",
+        advice: "Lùi lại một bước, quan sát trong tĩnh lặng và đừng vội kết luận trong hôm nay."
+      },
+      {
+        num: "III", roman: "III • THE EMPRESS", nameVi: "Hoàng Hậu", nameEn: "The Empress",
+        keywords: "Trù phú, yêu thương bản thân, chữa lành",
+        iconSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="4"/><path d="M12 2v6m0 8v6M2 12h6m8 0h6"/></svg>`,
+        energy: "Năng lượng nữ tính thiêng liêng và lòng trắc ẩn đang tràn ngập. Tình cảm hay dự án của bạn đang được nuôi dưỡng tươi tốt.",
+        advice: "Hãy chăm sóc cơ thể, ăn một bữa thật ngon và đối xử dịu dàng với chính mình."
+      },
+      {
+        num: "VI", roman: "VI • THE LOVERS", nameVi: "Đôi Tri Kỷ", nameEn: "The Lovers",
+        keywords: "Hòa hợp, gắn kết linh hồn, lựa chọn trái tim",
+        iconSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>`,
+        energy: "Một sự giao thoa cảm xúc sâu sắc. Đây là bài học về việc đồng điệu giữa giá trị sống của hai cá thể độc lập.",
+        advice: "Hãy lắng nghe sự rung động chân thật nhất, chọn người khiến bạn cảm thấy an toàn."
+      },
+      {
+        num: "X", roman: "X • WHEEL OF FORTUNE", nameVi: "Bánh Xe Định Mệnh", nameEn: "Wheel of Fortune",
+        keywords: "Bước ngoặt, may mắn bất ngờ, chu kỳ mới",
+        iconSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/><path d="M12 3v6m0 6v6M3 12h6m6 0h6"/></svg>`,
+        energy: "Vòng xoay thời vận đang chuyển hướng thuận lợi. Những u uất giai đoạn trước chuẩn bị nhường chỗ cho may mắn bất ngờ.",
+        advice: "Hãy cởi mở đón nhận những lời mời hay cơ hội xuất hiện trong tuần này."
+      },
+      {
+        num: "XVII", roman: "XVII • THE STAR", nameVi: "Ngôi Sao", nameEn: "The Star",
+        keywords: "Hy vọng, thanh lọc, chữa lành, niềm tin",
+        iconSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`,
+        energy: "Ánh sáng sau cơn giông bão. Năng lượng chữa lành đang tưới tắm tâm hồn bạn. Mọi nguyện ước đang dần thành hiện thực.",
+        advice: "Giữ vững niềm tin, không để sự ngờ vực làm mờ đi ánh sáng rực rỡ bên trong bạn."
+      },
+      {
+        num: "XIX", roman: "XIX • THE SUN", nameVi: "Mặt Trời", nameEn: "The Sun",
+        keywords: "Rực rỡ, thành công trọn vẹn, niềm vui hồn nhiên",
+        iconSvg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>`,
+        energy: "Lá bài tích cực nhất bộ Tarot. Mọi hiểu lầm sẽ được giải tỏa, mọi nỗ lực đều được đền đáp bằng sự tỏa sáng rạng ngời.",
+        advice: "Hãy tự tin chia sẻ thành quả của bạn với thế giới mà không cần e dè!"
+      }
+    ];
+
+    const BAMBOO_STICKS = [
+      {
+        num: 8, level: "THƯỢNG THƯỢNG CÁT", title: "Song Hỷ Lâm Môn • Gặp Người Tri Kỷ",
+        poem: "Xuân về hoa nở ngát đầu cành<br>Tình thắm duyên nồng vạn sự thanh<br>Cầu tài như ý người tri ngộ<br>Chẳng nhọc công tìm cũng hiện danh.",
+        desc: "Quẻ đại cát! Tình cảm và tài lộc tuần này siêu đỏ. Tin tức từ crush hoặc phỏng vấn việc làm đang trên đường gõ cửa!"
+      },
+      {
+        num: 15, level: "TRUNG CÁT", title: "Tĩnh Tâm Chờ Thời • Trăng Sắp Tròn",
+        poem: "Nước biếc non xanh chớ vội vàng<br>Thuận theo thiên ý ắt bình an<br>Đợi qua ngày tối trăng vằng vặc<br>Cửa sổ sương mai rạng nắng vàng.",
+        desc: "Hiện tại không nên vội vã đưa ra quyết định lớn. Chờ thêm vài ngày để cảm xúc lắng dịu, bạn sẽ thấy đường đi sáng tỏ."
+      },
+      {
+        num: 21, level: "ĐẠI CÁT", title: "Vượt Sóng Biển Lớn • Đón Thần Tài",
+        poem: "Cá chép vượt dòng hóa rồng bay<br>Tài nguyên cuồn cuộn đổ về tay<br>Công danh rạng rỡ lòng phơi phới<br>Gió mát trăng thanh ngất ngây say.",
+        desc: "Một khoản tiền thưởng hoặc cơ hội kiếm tiền phụ sắp đổ về tài khoản. Tự tin bung lụa với ý tưởng mới nha!"
+      }
+    ];
+
+    const COOKIE_QUOTES = [
+      "Vũ trụ không mắc sai lầm nào khi đưa bạn đến đúng thời khắc này.",
+      "Người thật lòng thương bạn sẽ không bao giờ để bạn phải hoài nghi về vị trí của mình.",
+      "Một cánh cửa tưởng như khép lại chỉ để dẫn bạn đến căn phòng ngập tràn hoa thơm hơn.",
+      "Thứ bảy tuần này, hãy mặc chiếc áo màu yêu thích, định mệnh đang đứng chờ bạn ở một góc phố quen.",
+      "Bạn không cần phải hoàn hảo để được trân trọng. Nét độc bản của bạn chính là báu vật."
+    ];
+
+    /* ----------------------------------------------------
+       2. STATE & AUDIO SYSTEM
+       ---------------------------------------------------- */
+    let walletBalance = parseInt(localStorage.getItem('aura_wallet_balance') || '50000');
+    let soundEnabled = true;
+    let audioCtx = null;
+    let currentDrawnCards = [];
+    let flippedCount = 0;
+    let savedReadings = JSON.parse(localStorage.getItem('aura_saved_readings') || '[]');
+
+    function saveWallet() {
+      localStorage.setItem('aura_wallet_balance', walletBalance.toString());
+      updateWalletDisplay();
+    }
+
+    function updateWalletDisplay() {
+      const formatted = walletBalance.toLocaleString('vi-VN') + " Xu";
+      const el1 = document.getElementById('walletBalanceDisplay');
+      const el2 = document.getElementById('modalBalanceDisplay');
+      if (el1) el1.textContent = formatted;
+      if (el2) el2.textContent = formatted;
+    }
+
+    function initAudio() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+    }
+
+    function playSound(type) {
+      if (!soundEnabled) return;
+      try {
+        initAudio();
+        if (audioCtx.state === 'suspended') {
+          audioCtx.resume();
+        }
+        const now = audioCtx.currentTime;
+        if (type === 'chime' || type === 'card') {
+          [523.25, 659.25, 783.99, 1046.50].forEach((freq, i) => {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(freq, now + i * 0.05);
+            gain.gain.setValueAtTime(0.08, now + i * 0.05);
+            gain.gain.exponentialRampToValueAtTime(0.0001, now + i * 0.05 + 1.2);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(now + i * 0.05);
+            osc.stop(now + i * 0.05 + 1.25);
+          });
+        } else if (type === 'click') {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(750, now);
+          osc.frequency.exponentialRampToValueAtTime(200, now + 0.07);
+          gain.gain.setValueAtTime(0.04, now);
+          gain.gain.linearRampToValueAtTime(0.001, now + 0.07);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(now);
+          osc.stop(now + 0.08);
+        } else if (type === 'success') {
+          [440, 554.37, 659.25, 880].forEach((freq, i) => {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(freq, now + i * 0.08);
+            gain.gain.setValueAtTime(0.1, now + i * 0.08);
+            gain.gain.exponentialRampToValueAtTime(0.0001, now + i * 0.08 + 1.5);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(now + i * 0.08);
+            osc.stop(now + i * 0.08 + 1.6);
+          });
+        }
+      } catch (e) {
+        // Fallback gracefully without throwing
+      }
+    }
+
+    function toggleAudio() {
+      soundEnabled = !soundEnabled;
+      const btn = document.getElementById('soundToggleBtn');
+      if (soundEnabled) {
+        btn.innerHTML = `<svg width="17" height="17" fill="currentColor" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>`;
+        showToast("✦ Đã bật âm thanh huyền bí ✦");
+        playSound('chime');
+      } else {
+        btn.innerHTML = `<svg width="17" height="17" fill="currentColor" viewBox="0 0 24 24"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>`;
+        showToast("Đã tắt âm thanh.");
+      }
+    }
+
+    function showToast(msg) {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = 'toast-msg';
+      toast.innerHTML = `<span>✨</span> <span>${msg}</span>`;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transition = 'opacity 0.3s';
+        setTimeout(() => toast.remove(), 350);
+      }, 3000);
+    }
+
+    /* ----------------------------------------------------
+       3. NAVIGATION & MOBILE DRAWER
+       ---------------------------------------------------- */
+    function toggleMobileMenu() {
+      playSound('click');
+      const drawer = document.getElementById('mobileDrawer');
+      const overlay = document.getElementById('drawerOverlay');
+      drawer.classList.toggle('open');
+      overlay.classList.toggle('active');
+    }
+
+    function navigateToSection(sectionId) {
+      playSound('card');
+      const el = document.getElementById(sectionId);
+      if (el) {
+        const offset = 75;
+        const bodyRect = document.body.getBoundingClientRect().top;
+        const elementRect = el.getBoundingClientRect().top;
+        const elementPosition = elementRect - bodyRect;
+        const offsetPosition = elementPosition - offset;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      }
+    }
+
+    /* CARD CLICK HANDLER (DESKTOP & MOBILE COMPATIBLE) */
+    function handleCardClick(target, cardEl) {
+      // Touch highlight
+      document.querySelectorAll('.stacked-card').forEach(c => c.classList.remove('touch-active'));
+      cardEl.classList.add('touch-active');
+
+      if (target === 'wallet') {
+        openWalletModal();
+      } else {
+        navigateToSection(target);
+      }
+    }
+
+    /* ----------------------------------------------------
+       4. GUIDED ONBOARDING SYSTEM
+       ---------------------------------------------------- */
+    let guideAnswers = {};
+
+    function selectGuideOption(step, key, label) {
+      playSound('click');
+      guideAnswers['step' + step] = { key, label };
+
+      document.getElementById('dot' + step).classList.add('done');
+      document.getElementById('dot' + step).classList.remove('active');
+
+      document.getElementById('step' + step).classList.remove('active');
+      const nextStep = step + 1;
+      const nextStepEl = document.getElementById('step' + nextStep);
+      const nextDotEl = document.getElementById('dot' + nextStep);
+
+      if (nextDotEl) nextDotEl.classList.add('active');
+      if (nextStepEl) nextStepEl.classList.add('active');
+
+      if (nextStep === 4) {
+        renderAuraResult();
+      }
+    }
+
+    function renderAuraResult() {
+      playSound('success');
+      const glow = document.getElementById('auraGlow');
+      const badge = document.getElementById('auraBadge');
+      const title = document.getElementById('auraTitle');
+      const desc = document.getElementById('auraDesc');
+      const actionBtn = document.getElementById('guideActionBtn');
+
+      const topic = guideAnswers['step1'] ? guideAnswers['step1'].key : 'love';
+      const mode = guideAnswers['step2'] ? guideAnswers['step2'].key : 'ai';
+
+      if (topic === 'love') {
+        badge.textContent = "✦ TẦN SỐ RUNG ĐỘNG: THẠCH ANH HỒNG (LOVE) ✦";
+        glow.style.background = "radial-gradient(circle, #f9c2d1 0%, #e6a5b8 50%, #9d8ec1 100%)";
+        title.textContent = "Trực Giác Bạn Đang Tìm Kiếm Sự Thấu Cảm";
+        desc.textContent = "Trái tim bạn đang có những gợn sóng cần được soi tỏ. Hãy mở lòng để nguồn năng lượng dịu dàng chỉ lối bạn thoát khỏi những suy diễn mệt nhoài.";
+      } else if (topic === 'career') {
+        badge.textContent = "✦ TẦN SỐ RUNG ĐỘNG: HOÀNG THẠCH KIM SẮC (CAREER) ✦";
+        glow.style.background = "radial-gradient(circle, #fff2cf 0%, #e8c872 50%, #224337 100%)";
+        title.textContent = "Thời Khắc Bứt Phá Công Danh Đang Đến";
+        desc.textContent = "Bản năng hành động và sự sáng tạo của bạn đang trực chờ thời cơ. Đừng để nỗi sợ thất bại kìm hãm bước tiến rực rỡ của bạn.";
+      } else {
+        badge.textContent = "✦ TẦN SỐ RUNG ĐỘNG: THẠCH ANH TÍM HUYỀN BÍ (HEALING) ✦";
+        glow.style.background = "radial-gradient(circle, #b5a4d6 0%, #755f9e 50%, #1a2e26 100%)";
+        title.textContent = "Tâm Hồn Bạn Cần Một Điểm Tựa Bình Yên";
+        desc.textContent = "Bạn đã nỗ lực rất nhiều thời gian qua. Đã đến lúc thả lỏng, tìm về sự cân bằng luân xa và lắng nghe tiếng nói sâu thẳm nhất bên trong.";
+      }
+
+      if (mode === 'human') {
+        actionBtn.textContent = "Kết Nối Cùng Master Reader →";
+        actionBtn.setAttribute('data-target', 'readers');
+      } else if (mode === 'fortune') {
+        actionBtn.textContent = "Gieo Quẻ Vui Nhanh Gọn (2k) →";
+        actionBtn.setAttribute('data-target', 'mini-fun');
+      } else {
+        actionBtn.textContent = "Trải Bài AI Oracle (5k) →";
+        actionBtn.setAttribute('data-target', 'ai-tarot');
+      }
+    }
+
+    function guideJump() {
+      const target = document.getElementById('guideActionBtn').getAttribute('data-target') || 'ai-tarot';
+      navigateToSection(target);
+    }
+
+    function resetGuide() {
+      guideAnswers = {};
+      for (let i = 1; i <= 4; i++) {
+        document.getElementById('step' + i).classList.remove('active');
+        document.getElementById('dot' + i).classList.remove('active', 'done');
+      }
+      document.getElementById('step1').classList.add('active');
+      document.getElementById('dot1').classList.add('active');
+    }
+
+    /* ----------------------------------------------------
+       5. FEATURE 1: AI TAROT ORACLE
+       ---------------------------------------------------- */
+    let currentCategory = 'love';
+
+    function setAiCategory(cat, el) {
+      playSound('click');
+      currentCategory = cat;
+      document.querySelectorAll('#aiTopicPills .pill-btn').forEach(b => b.classList.remove('active'));
+      el.classList.add('active');
+
+      const input = document.getElementById('aiQuestionInput');
+      if (cat === 'love') {
+        input.placeholder = "Ví dụ: Mình và người ấy đang im lặng 3 ngày nay. Liệu họ còn tình cảm với mình không?";
+      } else if (cat === 'career') {
+        input.placeholder = "Ví dụ: Mình vừa nhận được offer công việc mới. Mình có nên nhảy việc ngay tháng này không?";
+      } else if (cat === 'healing') {
+        input.placeholder = "Ví dụ: Dạo này mình hay lo âu, cảm giác mất kết nối với bản thân. Nguồn năng lượng nào đang cản trở mình?";
+      } else {
+        input.placeholder = "Ví dụ: Tổng quan năng lượng và những điềm báo cần chú ý trong tuần tới của mình là gì?";
+      }
+    }
+
+    function startCardDrawSession() {
+      const question = document.getElementById('aiQuestionInput').value.trim();
+      if (!question) {
+        showToast("⚠️ Vui lòng nhập câu hỏi hoặc tình huống của bạn nhé!");
+        document.getElementById('aiQuestionInput').focus();
+        return;
+      }
+
+      const COST = 5000;
+      if (walletBalance < COST) {
+        showToast("⚠️ Số dư không đủ 5.000 Xu. Hãy nạp thêm để tiếp tục nhé!");
+        openWalletModal();
+        return;
+      }
+
+      walletBalance -= COST;
+      saveWallet();
+      playSound('success');
+      showToast("✦ Đã trừ 5.000 Xu. Đang triệu hồi các lá bài... ✦");
+
+      const shuffled = [...TAROT_CARDS].sort(() => 0.5 - Math.random());
+      currentDrawnCards = shuffled.slice(0, 3);
+      flippedCount = 0;
+
+      for (let i = 0; i < 3; i++) {
+        const flipEl = document.getElementById('cardFlip' + i);
+        flipEl.classList.remove('flipped');
+        const frontEl = document.getElementById('cardFront' + i);
+        const cardData = currentDrawnCards[i];
+        frontEl.innerHTML = `
+          <div class="card-arcana-num">${cardData.roman}</div>
+          <div class="card-symbol-svg">${cardData.iconSvg}</div>
+          <div>
+            <div class="card-name-vi">${cardData.nameVi}</div>
+            <div class="card-name-en">${cardData.nameEn}</div>
+            <div class="card-keywords">${cardData.keywords}</div>
+          </div>
+        `;
+      }
+
+      document.getElementById('cardDrawStage').style.display = 'block';
+      document.getElementById('aiReadingResult').style.display = 'none';
+      document.getElementById('drawInstructionText').textContent = "✦ Chạm vào từng lá bài để lật mở thông điệp ✦";
+      
+      setTimeout(() => {
+        document.getElementById('cardDrawStage').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }, 100);
+    }
+
+    function flipTarotCard(index) {
+      const flipEl = document.getElementById('cardFlip' + index);
+      if (flipEl.classList.contains('flipped')) return;
+
+      playSound('card');
+      flipEl.classList.add('flipped');
+      flippedCount++;
+
+      if (flippedCount === 3) {
+        generateDetailedAiInterpretation();
+      }
+    }
+
+    function autoFlipAllCards() {
+      for (let i = 0; i < 3; i++) {
+        setTimeout(() => flipTarotCard(i), i * 220);
+      }
+    }
+
+    function generateDetailedAiInterpretation() {
+      playSound('chime');
+      document.getElementById('drawInstructionText').textContent = "✦ Cả 3 lá bài đã hiển lộ! Đang kết nối trí tuệ AI... ✦";
+
+      setTimeout(() => {
+        const question = document.getElementById('aiQuestionInput').value.trim();
+        const c1 = currentDrawnCards[0];
+        const c2 = currentDrawnCards[1];
+        const c3 = currentDrawnCards[2];
+
+        document.getElementById('readingHeaderTitle').textContent = `Luận Giải: "${question.substring(0, 42)}..."`;
+
+        document.getElementById('readingEnergyText').innerHTML = `
+          Tình huống mở đầu với <strong>${c1.nameVi} (${c1.nameEn})</strong>. ${c1.energy} 
+          Bạn đang đứng ở giao điểm giữa mong muốn an toàn quen thuộc và sự thôi thúc đổi mới từ tiềm thức. Bạn hoàn toàn đủ năng lực để làm chủ tình thế.
+        `;
+
+        document.getElementById('readingCardsText').innerHTML = `
+          • <strong>Lá 1 - Hiện Trạng (${c1.nameVi}):</strong> ${c1.keywords}. Tình hình hiện tại đang phản ánh đúng tâm trạng băn khoăn của bạn.<br><br>
+          • <strong>Lá 2 - Thử Thách & Lời Khuyên (${c2.nameVi}):</strong> ${c2.energy} Đừng để sự phán xét từ môi trường làm lay chuyển la bàn nội tâm.<br><br>
+          • <strong>Lá 3 - Xu Hướng Tương Lai (${c3.nameVi}):</strong> ${c3.energy} Tín hiệu vô cùng tích cực nếu bạn dám chủ động bước về phía trước.
+        `;
+
+        document.getElementById('readingAdviceText').innerHTML = `
+          1. <strong>Hành động:</strong> ${c2.advice}<br>
+          2. <strong>Cảm xúc:</strong> ${c3.advice}<br>
+          3. <strong>Thời điểm:</strong> Trong 7 - 14 ngày tới, một tín hiệu rõ ràng sẽ xuất hiện qua tin nhắn hoặc cơ hội trực tiếp.
+        `;
+
+        document.getElementById('readingAffirmationText').textContent = 
+          `"Tôi xứng đáng được đón nhận những điều thuần khiết và tốt đẹp nhất. Tôi tin tưởng tuyệt đối vào hành trình của mình."`;
+
+        document.getElementById('aiReadingResult').style.display = 'block';
+        document.getElementById('aiReadingResult').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+        window.lastGeneratedReading = {
+          date: new Date().toLocaleDateString('vi-VN'),
+          question: question,
+          cards: `${c1.nameVi}, ${c2.nameVi}, ${c3.nameVi}`,
+          summary: `${c3.nameVi} - ${c3.energy.substring(0, 80)}...`
+        };
+      }, 600);
+    }
+
+    function saveCurrentReading() {
+      if (!window.lastGeneratedReading) return;
+      savedReadings.unshift(window.lastGeneratedReading);
+      localStorage.setItem('aura_saved_readings', JSON.stringify(savedReadings));
+      playSound('success');
+      showToast("✦ Đã lưu quẻ vào Nhật Ký Vận Mệnh! ✦");
+    }
+
+    function copyReadingText() {
+      const q = document.getElementById('readingHeaderTitle').textContent;
+      const e = document.getElementById('readingEnergyText').innerText;
+      const c = document.getElementById('readingCardsText').innerText;
+      const a = document.getElementById('readingAdviceText').innerText;
+      const text = `${q}\n\n[TỔNG QUAN]\n${e}\n\n[CHI TIẾT LÁ BÀI]\n${c}\n\n[LỜI KHUYÊN]\n${a}\n\n(Nguồn: Maison de l'Aura Tarot Sanctuary)`;
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => {
+          playSound('click');
+          showToast("✦ Đã sao chép nội dung quẻ! ✦");
+        }).catch(() => showToast("Đã lưu nội dung quẻ"));
+      } else {
+        showToast("Đã chọn toàn bộ nội dung quẻ.");
+      }
+    }
+
+    /* ----------------------------------------------------
+       6. FEATURE 2: MASTER READERS BOOKING
+       ---------------------------------------------------- */
+    let selectedReaderName = "Master Selene";
+    let selectedReaderPrice = 180000;
+
+    function filterReaders(cat, el) {
+      playSound('click');
+      document.querySelectorAll('.readers-filter-bar .pill-btn').forEach(b => b.classList.remove('active'));
+      el.classList.add('active');
+
+      const cards = document.querySelectorAll('.reader-card');
+      cards.forEach(card => {
+        const cardCats = card.getAttribute('data-cat') || '';
+        if (cat === 'all' || cardCats.includes(cat)) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    function openBookingModal(name, price) {
+      playSound('click');
+      selectedReaderName = name;
+      selectedReaderPrice = price;
+      document.getElementById('bookingReaderName').textContent = `Đặt Lịch Cùng ${name}`;
+      document.getElementById('bookingPriceText').innerHTML = `Phí dịch vụ: <strong class="text-gold">${price.toLocaleString('vi-VN')} VNĐ</strong>`;
+      openModal('bookingModal');
+    }
+
+    function selectSlot(el) {
+      playSound('click');
+      document.querySelectorAll('#bookingSlots .slot-pill').forEach(s => s.classList.remove('selected'));
+      el.classList.add('selected');
+    }
+
+    function confirmBookingAppointment() {
+      const name = document.getElementById('seekerName').value.trim() || 'Bạn (Khách Quý)';
+      const contact = document.getElementById('seekerContact').value.trim();
+      const date = document.getElementById('bookingDateSelect').value;
+      const slotEl = document.querySelector('#bookingSlots .slot-pill.selected');
+      const slot = slotEl ? slotEl.textContent : '19:30 PM';
+      const mode = document.getElementById('bookingModeSelect').value;
+
+      if (!contact) {
+        showToast("⚠️ Vui lòng nhập số Zalo hoặc Telegram để nhận phòng!");
+        document.getElementById('seekerContact').focus();
+        return;
+      }
+
+      closeModal('bookingModal');
+      playSound('success');
+
+      const randomCode = 'AURA-' + Math.floor(10000 + Math.random() * 90000);
+      document.getElementById('ticketCode').textContent = randomCode;
+      document.getElementById('ticketReader').textContent = selectedReaderName;
+      document.getElementById('ticketTime').textContent = `${slot} • ${date}`;
+      document.getElementById('ticketMode').textContent = mode;
+      document.getElementById('ticketSeeker').textContent = `${name} (${contact})`;
+
+      savedReadings.unshift({
+        date: new Date().toLocaleDateString('vi-VN'),
+        question: `Lịch hẹn 1-on-1 cùng ${selectedReaderName}`,
+        cards: `Mã vé: ${randomCode} • ${slot}`,
+        summary: `Hình thức: ${mode}. Vui lòng kiểm tra Zalo/Telegram trước giờ hẹn.`
+      });
+      localStorage.setItem('aura_saved_readings', JSON.stringify(savedReadings));
+
+      openModal('ticketModal');
+    }
+
+    /* ----------------------------------------------------
+       7. FEATURE 3: MINI FUN FORTUNES
+       ---------------------------------------------------- */
+    function switchMiniGame(game, el) {
+      playSound('click');
+      document.querySelectorAll('.mini-tabs-nav .mini-tab-btn').forEach(b => b.classList.remove('active'));
+      el.classList.add('active');
+
+      document.getElementById('stageCylinder').style.display = (game === 'cylinder') ? 'flex' : 'none';
+      document.getElementById('stageCookie').style.display = (game === 'cookie') ? 'flex' : 'none';
+      document.getElementById('stageZodiac').style.display = (game === 'zodiac') ? 'flex' : 'none';
+    }
+
+    let isShaking = false;
+    function shakeCylinder() {
+      if (isShaking) return;
+      const COST = 2000;
+      if (walletBalance < COST) {
+        showToast("⚠️ Bạn cần ít nhất 2.000 Xu để gieo quẻ.");
+        openWalletModal();
+        return;
+      }
+
+      walletBalance -= COST;
+      saveWallet();
+      isShaking = true;
+      playSound('click');
+
+      const cylinder = document.getElementById('cylinderBox');
+      const stick = document.getElementById('bambooStick');
+      const resultBox = document.getElementById('cylinderResult');
+
+      resultBox.style.display = 'none';
+      cylinder.classList.remove('opened');
+      cylinder.classList.add('shaking');
+
+      setTimeout(() => {
+        cylinder.classList.remove('shaking');
+        cylinder.classList.add('opened');
+        playSound('success');
+
+        const stickData = BAMBOO_STICKS[Math.floor(Math.random() * BAMBOO_STICKS.length)];
+        stick.textContent = "SỐ " + stickData.num;
+
+        document.getElementById('stickNumberBadge').textContent = `QUẺ SỐ ${stickData.num} • ${stickData.level}`;
+        document.getElementById('stickTitle').textContent = stickData.title;
+        document.getElementById('stickPoem').innerHTML = stickData.poem;
+        document.getElementById('stickDesc').innerHTML = `<strong>Lời dịch nghĩa GenZ:</strong> ${stickData.desc}`;
+
+        resultBox.style.display = 'block';
+        isShaking = false;
+
+        savedReadings.unshift({
+          date: new Date().toLocaleDateString('vi-VN'),
+          question: `Gieo Quẻ Xăm Số ${stickData.num}`,
+          cards: stickData.level,
+          summary: stickData.title
+        });
+        localStorage.setItem('aura_saved_readings', JSON.stringify(savedReadings));
+      }, 750);
+    }
+
+    function crackCookie() {
+      const COST = 2000;
+      if (walletBalance < COST) {
+        showToast("⚠️ Bạn cần 2.000 Xu để mở bánh may mắn.");
+        openWalletModal();
+        return;
+      }
+
+      walletBalance -= COST;
+      saveWallet();
+      playSound('chime');
+
+      const cookie = document.getElementById('cookieElement');
+      const resultBox = document.getElementById('cookieResult');
+
+      const quote = COOKIE_QUOTES[Math.floor(Math.random() * COOKIE_QUOTES.length)];
+      const num1 = Math.floor(1 + Math.random() * 30);
+      const num2 = Math.floor(31 + Math.random() * 30);
+      const num3 = Math.floor(61 + Math.random() * 38);
+      const colors = ["Hồng Thạch Anh", "Tím Oải Hương", "Xanh Rừng Thông", "Vàng Ánh Kim", "Trắng Trăng Non"];
+      const randomColor = colors[Math.floor(Math.random() * colors.length)];
+
+      document.getElementById('cookieQuote').textContent = `"${quote}"`;
+      document.getElementById('cookieNumbers').textContent = `${num1.toString().padStart(2, '0')} • ${num2.toString().padStart(2, '0')} • ${num3.toString().padStart(2, '0')}`;
+      document.getElementById('cookieColor').textContent = randomColor;
+
+      resultBox.style.display = 'block';
+      showToast("✦ Bánh đã nở bung điều ước! ✦");
+    }
+
+    function calculateZodiacMatch() {
+      const COST = 3000;
+      if (walletBalance < COST) {
+        showToast("⚠️ Cần 3.000 Xu để so quẻ cung hoàng đạo.");
+        openWalletModal();
+        return;
+      }
+
+      walletBalance -= COST;
+      saveWallet();
+      playSound('success');
+
+      const you = document.getElementById('zodiacYou').value;
+      const crush = document.getElementById('zodiacCrush').value;
+      const score = Math.floor(84 + Math.random() * 15);
+
+      document.getElementById('zodiacMatchScore').textContent = `TỈ LỆ HÒA HỢP: ${score}% • ${score > 90 ? 'DUYÊN TIỀN ĐỊNH' : 'RẤT ĐẸP ĐÔI'}`;
+      document.getElementById('zodiacPairTitle').textContent = `${you} & ${crush}`;
+
+      document.getElementById('zodiacAnalysis').textContent = 
+        `Sự kết hợp giữa ${you} và ${crush} mang đến một bức tranh đa sắc. Cả hai có khả năng bù trừ những điểm thiếu sót cho nhau cực kỳ tự nhiên. Chỉ cần hạ bớt cái tôi và dành thời gian lắng nghe, tình cảm sẽ ngày một bền chặt.`;
+
+      document.getElementById('zodiacResult').style.display = 'block';
+      showToast("✦ Đã tính toán xong độ hòa hợp vũ trụ! ✦");
+    }
+
+    /* ----------------------------------------------------
+       8. WALLET TOP-UP & VIETQR
+       ---------------------------------------------------- */
+    let selectedPackageCoins = 70000;
+
+    function openWalletModal() {
+      playSound('click');
+      updateWalletDisplay();
+      openModal('walletModal');
+    }
+
+    function selectTopUpPackage(vnd, coins, el) {
+      playSound('click');
+      selectedPackageCoins = coins;
+      document.querySelectorAll('#walletModal .guide-opt-btn').forEach(b => b.classList.remove('selected'));
+      el.classList.add('selected');
+
+      const code = 'AURA' + (vnd / 1000) + 'K_' + Math.floor(1000 + Math.random() * 9000);
+      document.getElementById('qrTransferCode').textContent = code;
+    }
+
+    function confirmTopUpAction() {
+      walletBalance += selectedPackageCoins;
+      saveWallet();
+      playSound('success');
+      showToast(`🎉 Nạp thành công +${selectedPackageCoins.toLocaleString('vi-VN')} Xu!`);
+      closeModal('walletModal');
+    }
+
+    /* ----------------------------------------------------
+       9. HISTORY & CONTACT & DISCLAIMER MODALS
+       ---------------------------------------------------- */
+    function openHistoryModal() {
+      playSound('click');
+      const container = document.getElementById('historyListContainer');
+      container.innerHTML = '';
+
+      if (savedReadings.length === 0) {
+        container.innerHTML = `
+          <div style="text-align: center; color: var(--text-muted); padding: 26px;">
+            <div style="font-size: 28px; margin-bottom: 6px;">📜</div>
+            Bạn chưa lưu quẻ nào trong phiên này.<br>Hãy trải bài AI hoặc gieo quẻ để ghi lại vận mệnh nhé!
+          </div>
+        `;
+      } else {
+        savedReadings.forEach((item) => {
+          const div = document.createElement('div');
+          div.style.background = 'rgba(255, 255, 255, 0.04)';
+          div.style.border = '1px solid var(--border-gold)';
+          div.style.borderRadius = '10px';
+          div.style.padding = '12px 14px';
+          div.innerHTML = `
+            <div style="display:flex; justify-content:space-between; font-size:11px; color:var(--rose-cottage); margin-bottom:3px;">
+              <span>🗓️ ${item.date}</span>
+              <span><strong>${item.cards}</strong></span>
+            </div>
+            <div style="font-weight:600; color:var(--gold-primary); font-size:13.5px; margin-bottom:3px;">${item.question}</div>
+            <div style="font-size:12.5px; color:var(--text-muted); line-height:1.45;">${item.summary}</div>
+          `;
+          container.appendChild(div);
+        });
+      }
+
+      openModal('historyModal');
+    }
+
+    function openContactModal() {
+      playSound('click');
+      openModal('contactModal');
+    }
+
+    function openDisclaimerModal() {
+      playSound('click');
+      openModal('disclaimerModal');
+    }
+
+    function sendContactMessage() {
+      const text = document.getElementById('contactMsgInput').value.trim();
+      if (!text) {
+        showToast("⚠️ Vui lòng nhập nội dung nhắn gửi nhé!");
+        return;
+      }
+      document.getElementById('contactMsgInput').value = '';
+      closeModal('contactModal');
+      playSound('success');
+      showToast("✦ Tin nhắn đã được bồ câu đưa đến tiệm trà! Tụi mình sẽ phản hồi sớm ✦");
+    }
+
+    function openModal(id) {
+      document.getElementById(id).classList.add('active');
+    }
+
+    function closeModal(id) {
+      playSound('click');
+      document.getElementById(id).classList.remove('active');
+    }
+
+    document.querySelectorAll('.modal-backdrop').forEach(modal => {
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          modal.classList.remove('active');
+        }
+      });
+    });
+
+    /* ----------------------------------------------------
+       10. SUPPORT CHAT (TIỂU LINH THÚ)
+       ---------------------------------------------------- */
+    function toggleSupportChat() {
+      playSound('click');
+      const box = document.getElementById('supportChatBox');
+      box.classList.toggle('open');
+      if (box.classList.contains('open')) {
+        document.getElementById('chatInput').focus();
+      }
+    }
+
+    function askSupportBot(question) {
+      appendChatMessage('user', question);
+      respondBot(question);
+    }
+
+    function sendUserChatMessage() {
+      const input = document.getElementById('chatInput');
+      const q = input.value.trim();
+      if (!q) return;
+      input.value = '';
+      appendChatMessage('user', q);
+      respondBot(q);
+    }
+
+    function appendChatMessage(sender, text) {
+      const body = document.getElementById('chatBody');
+      const div = document.createElement('div');
+      div.className = `chat-msg ${sender}`;
+      div.textContent = text;
+      body.appendChild(div);
+      body.scrollTop = body.scrollHeight;
+    }
+
+    function respondBot(query) {
+      playSound('click');
+      const q = query.toLowerCase();
+      let reply = "Dạ Lune hiểu ùi nè! Mọi thắc mắc bạn cứ inbox thêm cho tiệm hoặc nhấn nút 'Ví Xu' để kiểm tra số dư nhen ✨.";
+
+      if (q.includes('nạp xu') || q.includes('tiền')) {
+        reply = "Bạn nhấp vào biểu tượng Ví Xu ở góc phải trên cùng để chọn gói nạp nhen! Tiệm hỗ trợ quét VietQR chuyển khoản cực nhanh từ 20k ạ 🪙.";
+      } else if (q.includes('ai') || q.includes('chuẩn')) {
+        reply = "AI Oracle của tiệm được huấn luyện chuyên sâu trên dữ liệu Rider-Waite kinh điển, thấu hiểu tâm lý GenZ nên phân tích rất sát thực tế đó ạ!";
+      } else if (q.includes('đổi lịch') || q.includes('reader') || q.includes('hẹn')) {
+        reply = "Nếu bận đột xuất, bạn chỉ cần nhắn vào Zalo 0988.234.567 trước 2 tiếng, tụi mình sẽ dời lịch hoàn toàn miễn phí cùng Reader cho bạn nghen 🌿.";
+      }
+
+      setTimeout(() => {
+        playSound('chime');
+        appendChatMessage('bot', reply);
+      }, 450);
+    }
+
+    /* ----------------------------------------------------
+       11. INTERSECTION OBSERVER & CANVAS PARTICLES
+       ---------------------------------------------------- */
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.08 });
+
+    document.querySelectorAll('section').forEach(sec => {
+      observer.observe(sec);
+    });
+
+    const canvas = document.getElementById('particle-canvas');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+    let particles = [];
+    const isMobileDevice = window.innerWidth < 768;
+    const particleCount = isMobileDevice ? 32 : 65;
+
+    function resizeCanvas() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    class Particle {
+      constructor() {
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
+        this.size = Math.random() * 1.8 + 0.4;
+        this.baseAlpha = Math.random() * 0.5 + 0.2;
+        this.alpha = this.baseAlpha;
+        this.speedX = (Math.random() - 0.5) * 0.25;
+        this.speedY = (Math.random() - 0.5) * 0.25 - 0.08;
+        this.twinkleSpeed = Math.random() * 0.02 + 0.005;
+        this.twinklePhase = Math.random() * Math.PI * 2;
+        this.color = Math.random() > 0.4 ? '#e8c872' : '#e6a5b8';
+      }
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        if (this.x < 0) this.x = width;
+        if (this.x > width) this.x = 0;
+        if (this.y < 0) this.y = height;
+        if (this.y > height) this.y = 0;
+
+        this.twinklePhase += this.twinkleSpeed;
+        this.alpha = this.baseAlpha + Math.sin(this.twinklePhase) * 0.2;
+      }
+      draw() {
+        ctx.save();
+        ctx.globalAlpha = Math.max(0, Math.min(1, this.alpha));
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+
+    for (let i = 0; i < particleCount; i++) {
+      particles.push(new Particle());
+    }
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, width, height);
+      particles.forEach(p => {
+        p.update();
+        p.draw();
+      });
+      requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+
+    if (!isMobileDevice) {
+      document.addEventListener('mousemove', (e) => {
+        const mouseX = e.clientX / window.innerWidth - 0.5;
+        const fan = document.getElementById('heroDeckFan');
+        if (fan) {
+          fan.style.transform = `rotateY(${mouseX * 10}deg)`;
+        }
+      });
+    }
+
+    updateWalletDisplay();
+  </script>
+</body>
+</html>
